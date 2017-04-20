@@ -1,3 +1,9 @@
+plugins {
+  id 'nebula.dependency-recommender' version '4.1.2'
+}
+
+group 'com.sharpandrew'
+
 repositories {
   mavenCentral()
 }
@@ -5,8 +11,17 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'checkstyle'
 
+dependencies {
+  testCompile 'org.assertj:assertj-core'
+  testCompile 'junit:junit'
+}
+
+dependencyRecommendations {
+  propertiesFile file: file('versions.props')
+}
+
 checkstyle {
   configFile file('checkstyle.xml')
   maxWarnings = 0
-  toolVersion "$checkstyleVersion"
+  toolVersion '7.6.1'
 }
