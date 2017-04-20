@@ -1,4 +1,5 @@
 # Practice Java
+[![CircleCI](https://circleci.com/gh/ags799/learn-java.svg?style=shield)](https://circleci.com/gh/ags799/learn-java)
 
 A project for practicing Java development.
 
