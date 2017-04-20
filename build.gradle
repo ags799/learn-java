@@ -1,1 +1,12 @@
+repositories {
+  mavenCentral()
+}
+
 apply plugin: 'java'
+apply plugin: 'checkstyle'
+
+checkstyle {
+  configFile file('checkstyle.xml')
+  maxWarnings = 0
+  toolVersion "$checkstyleVersion"
+}
