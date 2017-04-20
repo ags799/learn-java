@@ -23,4 +23,5 @@ Push the tag with
     git push $VERSION
 
 Create a [GitHub Release](https://github.com/ags799/learn-java/releases/new) for the
-tag.
+tag. The tag should already exist, and you should leave the title and description
+fields blank.
