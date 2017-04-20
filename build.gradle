@@ -1,8 +1,10 @@
 plugins {
+  id 'com.palantir.git-version' version '0.7.1'
   id 'nebula.dependency-recommender' version '4.1.2'
 }
 
 group 'com.sharpandrew'
+version gitVersion()
 
 repositories {
   mavenCentral()
