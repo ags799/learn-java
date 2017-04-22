@@ -1,4 +1,4 @@
-service: learn-serverless
+service: learn-java
 
 frameworkVersion: "=1.11.0"
 
