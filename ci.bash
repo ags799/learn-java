@@ -2,6 +2,7 @@
 
 set -xeuo pipefail
 ./gradlew assemble check
+if [[ $(node --version) != 4* ]]; then node i -g node@4; fi
 node --version
 npm -v
 if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" = 'master' ]; then
