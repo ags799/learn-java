@@ -4,3 +4,5 @@ jdk:
 after_deploy:
   - npm install -g serverless
   - serverless deploy --stage dev --region us-east-1 --verbose
+notifications:
+  email: false
