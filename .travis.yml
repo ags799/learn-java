@@ -1,4 +1,6 @@
 language: java
+node_js:
+  - 4
 jdk:
   - oraclejdk8
 script: bash ci.bash
