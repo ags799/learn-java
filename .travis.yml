@@ -4,6 +4,7 @@ jdk:
 script:
   - ./gradlew assemble
   - ./gradlew check
-  - [ "$(git branch | grep '*' | cut -d' ' -f2)" = 'master' ] && (npm install -g serverless && serverless deploy) || true
+  - |
+    [ "$(git branch | grep '*' | cut -d' ' -f2)" = 'master' ] && (npm install -g serverless && serverless deploy) || true
 notifications:
   email: false
