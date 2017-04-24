@@ -1,6 +1,9 @@
 language: java
 jdk:
   - oraclejdk8
+deploy:
+  on:
+    branch: master
 after_deploy:
   - npm install -g serverless
   - serverless deploy --stage dev --region us-east-1 --verbose
