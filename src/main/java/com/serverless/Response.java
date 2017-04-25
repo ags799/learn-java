@@ -1,22 +1,12 @@
 package com.serverless;
 
-import java.util.Map;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class Response {
-
-  private final String message;
-  private final Map<String, Object> input;
-
-  public Response(String message, Map<String, Object> input) {
-    this.message = message;
-    this.input = input;
-  }
-
-  public String getMessage() {
-    return this.message;
-  }
-
-  public Map<String, Object> getInput() {
-    return this.input;
-  }
+@Value.Immutable
+@JsonDeserialize(as = ImmutableResponse.class)
+@JsonSerialize(as = ImmutableResponse.class)
+public interface Response {
+  String message();
 }
