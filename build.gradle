@@ -3,9 +3,10 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'checkstyle'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 sourceCompatibility = 1.8
@@ -16,25 +17,31 @@ dependencyRecommendations {
 }
 
 dependencies {
-    compile (
-        'com.amazonaws:aws-lambda-java-core',
-        'com.amazonaws:aws-lambda-java-log4j',
-        'com.fasterxml.jackson.core:jackson-core',
-        'com.fasterxml.jackson.core:jackson-databind',
-        'com.fasterxml.jackson.core:jackson-annotations'
-    )
+  compile (
+    'com.amazonaws:aws-lambda-java-core',
+    'com.amazonaws:aws-lambda-java-log4j',
+    'com.fasterxml.jackson.core:jackson-core',
+    'com.fasterxml.jackson.core:jackson-databind',
+    'com.fasterxml.jackson.core:jackson-annotations'
+  )
+}
+
+checkstyle {
+  configFile file('checkstyle.xml')
+  maxWarnings = 0
+  toolVersion '7.6.1'
 }
 
 task deployable(type: Zip) {
-    // The path to this file must be set in the serverless.yml file under package.artifact.
-    baseName = "hello"
-    from compileJava
-    from processResources
-    into('lib') {
-        from configurations.runtime
-    }
+  // The path to this file must be set in the serverless.yml file under package.artifact.
+  baseName = "hello"
+  from compileJava
+  from processResources
+  into('lib') {
+    from configurations.runtime
+  }
 }
 
 task deploy(type: Exec, group: 'deployment', dependsOn: 'deployable') {
-    commandLine 'serverless', 'deploy'
+  commandLine 'serverless', 'deploy'
 }
