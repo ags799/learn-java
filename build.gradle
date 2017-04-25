@@ -38,6 +38,7 @@ dependencies {
     'com.fasterxml.jackson.core:jackson-core',
     'com.fasterxml.jackson.core:jackson-databind',
     'com.fasterxml.jackson.core:jackson-annotations',
+    'com.google.guava:guava'
   )
   testCompile (
       'junit:junit',
