@@ -32,7 +32,7 @@ checkstyle {
   toolVersion '7.6.1'
 }
 
-task deployable(type: Zip) {
+task deployable(type: Zip, group: 'deployment') {
   // The path to this file must be set in the serverless.yml file under package.artifact.
   baseName = "hello"
   from compileJava
