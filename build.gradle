@@ -20,6 +20,7 @@ apply plugin: 'findbugs'
 apply plugin: 'idea'
 
 repositories {
+  jcenter()
   mavenCentral()
 }
 
@@ -39,7 +40,9 @@ dependencies {
     'com.fasterxml.jackson.core:jackson-core',
     'com.fasterxml.jackson.core:jackson-databind',
     'com.fasterxml.jackson.core:jackson-annotations',
-    'com.google.guava:guava'
+    'com.google.guava:guava',
+    'com.jrestless.aws:jrestless-aws-gateway-handler:0.5.0',
+    'org.glassfish.jersey.media:jersey-media-json-jackson:2.23',
   )
   testCompile (
       'junit:junit',
@@ -53,9 +56,13 @@ checkstyle {
   toolVersion '7.6.1'
 }
 
+findbugs {
+  excludeFilter file('findbugs-exclude.xml')
+}
+
 task deployable(type: Zip, group: 'deployment') {
   // The path to this file must be set in the serverless.yml file under package.artifact.
-  baseName = "hello"
+  baseName = "learn-java"
   from compileJava
   from processResources
   into('lib') {
