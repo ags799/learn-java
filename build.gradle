@@ -1,3 +1,7 @@
+plugins {
+  id 'nebula.dependency-recommender' version '4.1.2'
+}
+
 apply plugin: 'java'
 
 repositories {
@@ -7,13 +11,17 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+dependencyRecommendations {
+  propertiesFile file: file('versions.props')
+}
+
 dependencies {
     compile (
-        'com.amazonaws:aws-lambda-java-core:1.1.0',
-        'com.amazonaws:aws-lambda-java-log4j:1.0.0',
-        'com.fasterxml.jackson.core:jackson-core:2.8.5',
-        'com.fasterxml.jackson.core:jackson-databind:2.8.5',
-        'com.fasterxml.jackson.core:jackson-annotations:2.8.5'
+        'com.amazonaws:aws-lambda-java-core',
+        'com.amazonaws:aws-lambda-java-log4j',
+        'com.fasterxml.jackson.core:jackson-core',
+        'com.fasterxml.jackson.core:jackson-databind',
+        'com.fasterxml.jackson.core:jackson-annotations'
     )
 }
 
