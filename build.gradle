@@ -38,7 +38,9 @@ dependencies {
     'com.fasterxml.jackson.core:jackson-core',
     'com.fasterxml.jackson.core:jackson-databind',
     'com.fasterxml.jackson.core:jackson-annotations',
-    'com.google.guava:guava'
+    'com.google.guava:guava',
+    'com.amazonaws.serverless:aws-serverless-java-container-jersey',
+    'org.glassfish.jersey.media:jersey-media-json-jackson',
   )
   testCompile (
       'junit:junit',
