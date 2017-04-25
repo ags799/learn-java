@@ -9,8 +9,11 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableApiGatewayResponse.class)
 @JsonSerialize(as = ImmutableApiGatewayResponse.class)
 public interface ApiGatewayResponse {
-	int getStatusCode();
-	Map<String, String> getHeaders();
-	String getBody();
-	boolean isBase64Encoded();
+  int getStatusCode();
+
+  Map<String, String> getHeaders();
+
+  String getBody();
+
+  boolean isBase64Encoded();
 }
