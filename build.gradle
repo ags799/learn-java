@@ -37,7 +37,7 @@ dependencies {
     'com.amazonaws:aws-lambda-java-log4j',
     'com.fasterxml.jackson.core:jackson-core',
     'com.fasterxml.jackson.core:jackson-databind',
-    'com.fasterxml.jackson.core:jackson-annotations'
+    'com.fasterxml.jackson.core:jackson-annotations',
   )
   testCompile (
       'junit:junit',

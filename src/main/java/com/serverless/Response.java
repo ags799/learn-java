@@ -9,5 +9,4 @@ import org.immutables.value.Value;
 @JsonSerialize(as = ImmutableResponse.class)
 public interface Response {
   String message();
-  Request request();
 }
