@@ -1,5 +1,6 @@
 # Learn Java
 [![Travis](https://travis-ci.org/ags799/learn-java.svg?branch=master)](https://travis-ci.org/ags799/learn-java)
+
 We learn Java by implementing answers to common interview questions.
 
 ## Development
