@@ -17,3 +17,5 @@ Verify your code with
 Deploy your code with
 
     ./gradlew deploy
+
+The output of the deploy command will indicate the URL to which the code was deployed.
