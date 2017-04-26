@@ -36,10 +36,10 @@ resources:
       Properties:
         TableName: edges
         AttributeDefinitions:
-          - AttributeName: graphName
+          - AttributeName: edgeId
             AttributeType: S
         KeySchema:
-          - AttributeName: graphName
+          - AttributeName: edgeId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
