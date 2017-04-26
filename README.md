@@ -7,8 +7,8 @@ We learn Java by implementing answers to common interview questions.
 
 Prepare your environment by
 
-- installing [serverless](http://serverless.com).
-- setting AWS access key ID & secret access key values.
+- installing [serverless](http://serverless.com)
+- setting AWS access key ID & secret access key values
 
 Verify your code with
 
