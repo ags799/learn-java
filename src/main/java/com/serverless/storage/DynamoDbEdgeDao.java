@@ -52,10 +52,10 @@ public class DynamoDbEdgeDao implements EdgeDao {
       StringBuilder stringBuilder = new StringBuilder();
       stringBuilder.append("Failed to save some batches:\n");
       failedBatches.forEach(batch -> {
-          stringBuilder.append('\t');
-          stringBuilder.append(batch.getUnprocessedItems());
-          stringBuilder.append("\t\t");
-          stringBuilder.append(batch.getException());
+        stringBuilder.append('\t');
+        stringBuilder.append(batch.getUnprocessedItems());
+        stringBuilder.append("\t\t");
+        stringBuilder.append(batch.getException());
       });
       throw new RuntimeException(stringBuilder.toString());
     }
