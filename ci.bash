@@ -3,7 +3,9 @@
 set -xeuo pipefail
 ./gradlew assemble check
 if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" = 'master' ]; then
+  unset -x
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+  set -x
   # https://github.com/creationix/nvm/issues/1505
   sed -i '2474,2476s/$REINSTALL_PACKAGES_FROM/${REINSTALL_PACKAGES_FROM:-}/' /home/travis/.nvm/nvm.sh
   export NVM_DIR="$HOME/.nvm"
