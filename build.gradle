@@ -72,5 +72,5 @@ task deployable(type: Zip, group: 'deployment') {
 }
 
 task deploy(type: Exec, group: 'deployment', dependsOn: 'deployable') {
-  commandLine 'serverless', 'deploy'
+  commandLine 'serverless', 'deploy', '--stage', "${stage}", '--region', "${region}"
 }
