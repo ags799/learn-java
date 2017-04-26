@@ -2,6 +2,7 @@
 
 set -xeuo pipefail
 ./gradlew assemble check
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 nvm install 4
 nvm use 4
 node --version
