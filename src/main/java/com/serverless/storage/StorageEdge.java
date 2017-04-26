@@ -3,24 +3,40 @@ package com.serverless.storage;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.immutables.value.Value;
 
 /**
  * The names used in this class's annotations must match serverless.yml.
  */
-@Value.Immutable
-@JsonDeserialize(as = ImmutableStorageEdge.class)
-@JsonSerialize(as = ImmutableStorageEdge.class)
 @DynamoDBTable(tableName = "edges")
-public interface StorageEdge {
+public final class StorageEdge {
+  private String graphName;
+  private int startVertex;
+  private int endVertex;
+
   @DynamoDBHashKey(attributeName = "graphName")
-  String graphName();
+  public String getGraphName() {
+    return graphName;
+  }
+
+  public void setGraphName(String graphName) {
+    this.graphName = graphName;
+  }
 
   @DynamoDBAttribute(attributeName = "startVertex")
-  int startVertex();
+  public int getStartVertex() {
+    return startVertex;
+  }
+
+  public void setStartVertex(int startVertex) {
+    this.startVertex = startVertex;
+  }
 
   @DynamoDBAttribute(attributeName = "endVertex")
-  int endVertex();
+  public int getEndVertex() {
+    return endVertex;
+  }
+
+  public void setEndVertex(int endVertex) {
+    this.endVertex = endVertex;
+  }
 }
