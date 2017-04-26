@@ -47,7 +47,18 @@ public class DynamoDbEdgeDao implements EdgeDao {
 
   @Override
   public void post(Set<StorageEdge> edges) {
-    mapper.batchLoad(edges);
+    List<DynamoDBMapper.FailedBatch> failedBatches = mapper.batchSave(edges);
+    if (!failedBatches.isEmpty()) {
+      StringBuilder stringBuilder = new StringBuilder();
+      stringBuilder.append("Failed to save some batches:\n");
+      failedBatches.forEach(batch -> {
+          stringBuilder.append('\t');
+          stringBuilder.append(batch.getUnprocessedItems());
+          stringBuilder.append("\t\t");
+          stringBuilder.append(batch.getException());
+      });
+      throw new RuntimeException(stringBuilder.toString());
+    }
   }
 
   @Override
