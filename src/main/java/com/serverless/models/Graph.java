@@ -8,6 +8,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 @JsonDeserialize(as = ImmutableGraph.class)
 @JsonSerialize(as = ImmutableGraph.class)
+@Value.Style(jdkOnly = true)
 public interface Graph {
   Set<Edge> edges();
 }
