@@ -27,10 +27,10 @@ public class DynamoDbGraphDao implements GraphDao {
 
   @Override
   public Graph get(String name) {
-    StorageEdge storageEdge = mapper.load(StorageEdge.class, name);
+    DynamoDbEdge dynamoDbEdge = mapper.load(DynamoDbEdge.class, name);
     Edge edge = ImmutableEdge.builder()
-        .startVertex(storageEdge.getStartVertex())
-        .endVertex(storageEdge.getEndVertex())
+        .startVertex(dynamoDbEdge.getStartVertex())
+        .endVertex(dynamoDbEdge.getEndVertex())
         .build();
     return ImmutableGraph.builder().addEdges(edge).build();
   }
@@ -49,10 +49,10 @@ public class DynamoDbGraphDao implements GraphDao {
   @Override
   public void put(String name, Graph graph) {
     Edge edge = Iterables.getOnlyElement(graph.edges());
-    StorageEdge storageEdge = new StorageEdge();
-    storageEdge.setGraphName(name);
-    storageEdge.setStartVertex(edge.startVertex());
-    storageEdge.setEndVertex(edge.endVertex());
-    mapper.save(storageEdge);
+    DynamoDbEdge dynamoDbEdge = new DynamoDbEdge();
+    dynamoDbEdge.setGraphName(name);
+    dynamoDbEdge.setStartVertex(edge.startVertex());
+    dynamoDbEdge.setEndVertex(edge.endVertex());
+    mapper.save(dynamoDbEdge);
   }
 }
