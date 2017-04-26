@@ -1,4 +1,4 @@
-package com.serverless.models;
+package com.sharpandrew.learnjava.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

@@ -1,4 +1,4 @@
-package com.serverless.storage;
+package com.sharpandrew.learnjava.storage;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;

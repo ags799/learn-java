@@ -24,7 +24,7 @@ package:
 
 functions:
   all:
-    handler: com.serverless.Handler
+    handler: com.sharpandrew.learnjava.Handler
     events:
       - http:
           path: api/{proxy+}

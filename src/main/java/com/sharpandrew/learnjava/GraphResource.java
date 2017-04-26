@@ -1,12 +1,12 @@
-package com.serverless;
+package com.sharpandrew.learnjava;
 
-import com.serverless.models.Edge;
-import com.serverless.models.Graph;
-import com.serverless.models.ImmutableEdge;
-import com.serverless.models.ImmutableGraph;
-import com.serverless.storage.DynamoDbEdgeDao;
-import com.serverless.storage.EdgeDao;
-import com.serverless.storage.StorageEdge;
+import com.sharpandrew.learnjava.models.Edge;
+import com.sharpandrew.learnjava.models.Graph;
+import com.sharpandrew.learnjava.models.ImmutableEdge;
+import com.sharpandrew.learnjava.models.ImmutableGraph;
+import com.sharpandrew.learnjava.storage.DynamoDbEdgeDao;
+import com.sharpandrew.learnjava.storage.EdgeDao;
+import com.sharpandrew.learnjava.storage.StorageEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.DELETE;
