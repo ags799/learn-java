@@ -12,43 +12,43 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class DynamoDbGraphDao implements GraphDao {
+public class DynamoDbEdgeDao implements EdgeDao {
   private static final DynamoDBMapper mapper = new DynamoDBMapper(
       AmazonDynamoDBClientBuilder.defaultClient());
 
-  private static DynamoDbGraphDao instance = null;
+  private static DynamoDbEdgeDao instance = null;
 
-  private DynamoDbGraphDao() {}
+  private DynamoDbEdgeDao() {}
 
-  public static DynamoDbGraphDao getInstance() {
+  public static DynamoDbEdgeDao getInstance() {
     if (instance == null) {
-      instance = new DynamoDbGraphDao();
+      instance = new DynamoDbEdgeDao();
     }
     return instance;
   }
 
   @Override
-  public Graph get(String name) {
-    DynamoDbEdge dynamoDbEdge = mapper.load(DynamoDbEdge.class, name);
+  public Set<StorageEdge> get(String name) {
+    StorageEdge storageEdge = mapper.load(StorageEdge.class, name);
     Edge edge = ImmutableEdge.builder()
-        .startVertex(dynamoDbEdge.getStartVertex())
-        .endVertex(dynamoDbEdge.getEndVertex())
+        .startVertex(storageEdge.getStartVertex())
+        .endVertex(storageEdge.getEndVertex())
         .build();
     return ImmutableGraph.builder().addEdges(edge).build();
   }
 
   @Override
-  public Set<Graph> getAll() {
-    List<DynamoDbEdge> dynamoDbEdges = mapper.scan(
-        DynamoDbEdge.class, new DynamoDBScanExpression());
-    return dynamoDbEdges.stream()
-        .collect(Collectors.groupingBy(DynamoDbEdge::getGraphName, Collectors.toSet()))
+  public Set<StorageEdge> getAll() {
+    List<StorageEdge> storageEdges = mapper.scan(
+        StorageEdge.class, new DynamoDBScanExpression());
+    return storageEdges.stream()
+        .collect(Collectors.groupingBy(StorageEdge::getGraphName, Collectors.toSet()))
         .values()
         .stream()
         .map(dynamoDbEdgesByGraph -> dynamoDbEdgesByGraph.stream()
-          .map(dynamoDbEdge -> ImmutableEdge.builder()
-            .startVertex(dynamoDbEdge.getStartVertex())
-            .endVertex(dynamoDbEdge.getEndVertex())
+          .map(storageEdge -> ImmutableEdge.builder()
+            .startVertex(storageEdge.getStartVertex())
+            .endVertex(storageEdge.getEndVertex())
             .build())
           .collect(Collectors.toSet()))
         .map(edges -> ImmutableGraph.builder()
@@ -58,18 +58,18 @@ public class DynamoDbGraphDao implements GraphDao {
   }
 
   @Override
-  public void put(String name, Graph graph) {
+  public void post(Set<StorageEdge> edges) {
     Edge edge = Iterables.getOnlyElement(graph.edges());
-    DynamoDbEdge dynamoDbEdge = new DynamoDbEdge();
-    dynamoDbEdge.setGraphName(name);
-    dynamoDbEdge.setStartVertex(edge.startVertex());
-    dynamoDbEdge.setEndVertex(edge.endVertex());
-    mapper.save(dynamoDbEdge);
+    StorageEdge storageEdge = new StorageEdge();
+    storageEdge.setGraphName(name);
+    storageEdge.setStartVertex(edge.startVertex());
+    storageEdge.setEndVertex(edge.endVertex());
+    mapper.save(storageEdge);
   }
 
   @Override
   public void delete(String name) {
-    DynamoDbEdge dynamoDbEdge = mapper.load(DynamoDbEdge.class, name);
-    mapper.delete(dynamoDbEdge);
+    StorageEdge storageEdge = mapper.load(StorageEdge.class, name);
+    mapper.delete(storageEdge);
   }
 }

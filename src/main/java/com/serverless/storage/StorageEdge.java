@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
  * The names used in this class's annotations must match serverless.yml.
  */
 @DynamoDBTable(tableName = "edges")
-public final class DynamoDbEdge {
+public final class StorageEdge {
   private String graphName;
   private int startVertex;
   private int endVertex;
