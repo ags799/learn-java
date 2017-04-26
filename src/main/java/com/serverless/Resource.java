@@ -8,9 +8,9 @@ import javax.ws.rs.core.MediaType;
 @Path("/api")
 public class Resource {
   @GET
-  @Path("/hello")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response hello() {
-    return ImmutableResponse.builder().message("some message").build();
+  @Path("/ping")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String hello() {
+    return "pong";
   }
 }
