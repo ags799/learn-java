@@ -30,4 +30,10 @@ public class GraphResource {
   public void put(@PathParam("name") String name, Graph graph) {
     graphDao.put(name, graph);
   }
+
+  @DELETE
+  @Path("/{name}")
+  public void delete(@PathParam("name") String name) {
+    graphDao.delete(name);
+  }
 }

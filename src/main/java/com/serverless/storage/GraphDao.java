@@ -9,4 +9,6 @@ public interface GraphDao {
   Set<Graph> getAll();
 
   void put(String name, Graph graph);
+
+  void delete(String name);
 }
