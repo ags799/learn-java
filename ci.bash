@@ -11,6 +11,5 @@ if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" = 'master' ]; then
   nvm install 4
   nvm use 4
   npm install -g serverless
-  ./gradlew deployable
-  serverless deploy --stage prod --region us-east-1 --verbose
+  ./gradlew deploy -Pstage=prod -Pregion=us-east-1
 fi
