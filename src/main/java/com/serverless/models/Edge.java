@@ -7,8 +7,8 @@ import org.immutables.value.Value;
 @Value.Immutable
 @JsonDeserialize(as = ImmutableEdge.class)
 @JsonSerialize(as = ImmutableEdge.class)
-public interface Edge {
-  int startVertex();
+public abstract class Edge {
+  public abstract int startVertex();
 
-  int endVertex();
+  public abstract int endVertex();
 }
