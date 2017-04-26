@@ -1,7 +1,7 @@
 # written for Travis CI
 
 set -xeuo pipefail
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 # https://github.com/creationix/nvm/issues/1505
 sed -i '2474,2476s/$REINSTALL_PACKAGES_FROM/${REINSTALL_PACKAGES_FROM:-}/' /home/travis/.nvm/nvm.sh
 export NVM_DIR="$HOME/.nvm"
