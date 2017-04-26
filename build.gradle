@@ -36,6 +36,7 @@ dependencies {
 
   compileOnly 'org.immutables:value'
 
+  compile 'com.amazonaws:aws-java-sdk-dynamodb'
   compile 'com.amazonaws:aws-lambda-java-core'
   compile 'com.amazonaws:aws-lambda-java-log4j'
   compile 'com.fasterxml.jackson.core:jackson-core'

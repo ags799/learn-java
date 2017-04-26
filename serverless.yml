@@ -10,7 +10,7 @@ package:
   artifact: build/distributions/learn-java.zip
 
 functions:
-  hello:
+  all:
     handler: com.serverless.Handler
     events:
       - http:
