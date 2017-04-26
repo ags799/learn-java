@@ -16,3 +16,19 @@ functions:
       - http:
           path: api/{proxy+}
           method: any
+
+resources:
+  Resources:
+    edges:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: edges
+        AttributeDefinitions:
+          - AttributeName: graphName
+            AttributeType: S
+        KeySchema:
+          - AttributeName: graphName
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

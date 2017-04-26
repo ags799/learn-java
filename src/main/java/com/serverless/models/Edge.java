@@ -1,12 +1,14 @@
-package com.serverless;
+package com.serverless.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonDeserialize(as = ImmutableResponse.class)
-@JsonSerialize(as = ImmutableResponse.class)
-public interface Response {
-  String message();
+@JsonDeserialize(as = ImmutableEdge.class)
+@JsonSerialize(as = ImmutableEdge.class)
+public interface Edge {
+  int startVertex();
+
+  int endVertex();
 }
