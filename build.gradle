@@ -33,21 +33,20 @@ dependencyRecommendations {
 
 dependencies {
   apt 'org.immutables:value'
+
   compileOnly 'org.immutables:value'
-  compile (
-    'com.amazonaws:aws-lambda-java-core',
-    'com.amazonaws:aws-lambda-java-log4j',
-    'com.fasterxml.jackson.core:jackson-core',
-    'com.fasterxml.jackson.core:jackson-databind',
-    'com.fasterxml.jackson.core:jackson-annotations',
-    'com.google.guava:guava',
-    'com.jrestless.aws:jrestless-aws-gateway-handler:0.5.0',
-    'org.glassfish.jersey.media:jersey-media-json-jackson:2.23',
-  )
-  testCompile (
-      'junit:junit',
-      'org.assertj:assertj-core'
-  )
+
+  compile 'com.amazonaws:aws-lambda-java-core'
+  compile 'com.amazonaws:aws-lambda-java-log4j'
+  compile 'com.fasterxml.jackson.core:jackson-core'
+  compile 'com.fasterxml.jackson.core:jackson-databind'
+  compile 'com.fasterxml.jackson.core:jackson-annotations'
+  compile 'com.google.guava:guava'
+  compile 'com.jrestless.aws:jrestless-aws-gateway-handler'
+  compile 'org.glassfish.jersey.media:jersey-media-json-jackson'
+
+  testCompile 'junit:junit'
+  testCompile 'org.assertj:assertj-core'
 }
 
 checkstyle {
