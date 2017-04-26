@@ -1,4 +1,4 @@
-package com.serverless;
+package com.sharpandrew.learnjava;
 
 import com.jrestless.aws.gateway.GatewayFeature;
 import com.jrestless.aws.gateway.handler.GatewayRequestObjectHandler;
@@ -12,7 +12,7 @@ public class Handler extends GatewayRequestObjectHandler {
     SLF4JBridgeHandler.install();
     ResourceConfig resourceConfig = new ResourceConfig()
         .register(GatewayFeature.class)
-        .packages("com.serverless");
+        .packages("com.sharpandrew.learnjava");
     init(resourceConfig);
     start();
   }

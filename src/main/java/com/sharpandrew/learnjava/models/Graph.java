@@ -1,4 +1,4 @@
-package com.serverless.models;
+package com.sharpandrew.learnjava.models;
 
 import static com.google.common.base.Preconditions.checkState;
 
