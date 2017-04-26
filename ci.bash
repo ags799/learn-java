@@ -10,8 +10,8 @@ nvm install 4
 nvm use 4
 node --version
 npm -v
+npm install -g serverless
 ./gradlew assemble check
 if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" = 'master' ]; then
-  npm install -g serverless
   serverless deploy --stage prod --region us-east-1 --verbose
 fi
