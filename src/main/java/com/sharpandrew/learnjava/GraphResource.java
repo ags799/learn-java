@@ -14,6 +14,9 @@ import javax.ws.rs.NotFoundException;
 public class GraphResource implements GraphService {
   private final EdgeDao edgeDao = DynamoDbEdgeDao.getInstance();
 
+  /**
+   * {@inheritDoc}
+   */
   public Graph get(String id) {
     Set<StorageEdge> storageEdges = edgeDao.get(id);
     if (storageEdges.isEmpty()) {
@@ -29,6 +32,9 @@ public class GraphResource implements GraphService {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Set<Graph> getAll() {
     Set<StorageEdge> storageEdges = edgeDao.getAll();
     return storageEdges.stream()
@@ -47,6 +53,9 @@ public class GraphResource implements GraphService {
         .collect(Collectors.toSet());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void put(String id, Graph graph) {
     Set<StorageEdge> storageEdges = graph.edges().stream()
         .map(edge -> {
@@ -60,6 +69,9 @@ public class GraphResource implements GraphService {
     edgeDao.post(storageEdges);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void delete(String id) {
     edgeDao.delete(id);
   }
