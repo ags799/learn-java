@@ -2,28 +2,32 @@ package com.sharpandrew.learnjava.storage;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
 import java.util.List;
 import java.util.Set;
 
-public class DynamoDbEdgeDao implements EdgeDao {
-  private static final DynamoDBMapper mapper = new DynamoDBMapper(
-      AmazonDynamoDBClientBuilder.defaultClient());
+final class DynamoDbEdgeDao implements EdgeDao {
+  private final DynamoDBMapper mapper;
 
-  private static DynamoDbEdgeDao instance = null;
+  static DynamoDbEdgeDao create(String tableNamePrefix) {
+    DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
+        .withTableNameOverride(
+            DynamoDBMapperConfig.TableNameOverride.withTableNamePrefix(tableNamePrefix))
+        .build();
+    DynamoDBMapper mapper = new DynamoDBMapper(
+        AmazonDynamoDBClientBuilder.defaultClient(), config);
+    return new DynamoDbEdgeDao(mapper);
+  }
 
-  private DynamoDbEdgeDao() {}
-
-  /** Use to get instances of this class. */
-  public static DynamoDbEdgeDao getInstance() {
-    if (instance == null) {
-      instance = new DynamoDbEdgeDao();
-    }
-    return instance;
+  @VisibleForTesting
+  DynamoDbEdgeDao(DynamoDBMapper mapper) {
+    this.mapper = mapper;
   }
 
   @Override
