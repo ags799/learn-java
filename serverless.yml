@@ -5,7 +5,7 @@ frameworkVersion: "=1.12.1"
 custom:
   defaultStage: dev
   defaultRegion: us-east-1
-  edgesTableName: ${self:provider.stage}-edges
+  edgesTableName: ${self:service}-${self:provider.stage}-edges
 
 provider:
   name: aws
@@ -31,7 +31,7 @@ functions:
   all:
     handler: com.sharpandrew.learnjava.Handler
     environment:
-      STAGE: ${self:provider.stage}
+      EDGES_TABLE_NAME: ${self:custom.edgesTableName}
     events:
       - http:
           path: api/{proxy+}

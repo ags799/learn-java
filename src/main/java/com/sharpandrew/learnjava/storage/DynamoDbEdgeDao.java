@@ -15,10 +15,10 @@ import java.util.Set;
 final class DynamoDbEdgeDao implements EdgeDao {
   private final DynamoDBMapper mapper;
 
-  static DynamoDbEdgeDao create(String tableNamePrefix) {
+  static DynamoDbEdgeDao create(String edgesTableName) {
     DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
         .withTableNameOverride(
-            DynamoDBMapperConfig.TableNameOverride.withTableNamePrefix(tableNamePrefix))
+            DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(edgesTableName))
         .build();
     DynamoDBMapper mapper = new DynamoDBMapper(
         AmazonDynamoDBClientBuilder.defaultClient(), config);
