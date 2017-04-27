@@ -4,6 +4,7 @@ com.amazonaws:aws-lambda-java-log4j = 1.0.0
 com.fasterxml.jackson.core:* = 2.8.5
 com.google.guava:guava = 21.0
 com.jrestless.aws:jrestless-aws-gateway-handler = 0.5.0
+commons-io:commons-io = 2.5
 junit:junit = 4.12
 org.assertj:assertj-core = 3.6.2
 org.glassfish.jersey.media:jersey-media-json-jackson = 2.23
