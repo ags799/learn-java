@@ -54,6 +54,9 @@ dependencies {
   compile 'org.slf4j:slf4j-log4j12'
 
   integrationTestCompile 'commons-io:commons-io'
+  integrationTestCompile 'io.github.openfeign:feign-core'
+  integrationTestCompile 'io.github.openfeign:feign-jackson'
+  integrationTestCompile 'io.github.openfeign:feign-jaxrs'
 
   testCompile 'junit:junit'
   testCompile 'org.assertj:assertj-core'
