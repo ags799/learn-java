@@ -1,18 +1,32 @@
 package com.sharpandrew.learnjava;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.sharpandrew.learnjava.models.Edge;
 import com.sharpandrew.learnjava.models.Graph;
 import com.sharpandrew.learnjava.models.ImmutableEdge;
 import com.sharpandrew.learnjava.models.ImmutableGraph;
-import com.sharpandrew.learnjava.storage.DynamoDbEdgeDao;
+import com.sharpandrew.learnjava.storage.DaoFactory;
+import com.sharpandrew.learnjava.storage.DynamoDbDaoFactory;
 import com.sharpandrew.learnjava.storage.EdgeDao;
 import com.sharpandrew.learnjava.storage.StorageEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.NotFoundException;
 
-public class GraphResource implements GraphService {
-  private final EdgeDao edgeDao = DynamoDbEdgeDao.getInstance();
+public final class GraphResource implements GraphService {
+  private final EdgeDao edgeDao;
+
+  /** Create an instance. */
+  public static GraphResource create() {
+    String stage = ServerlessEnvironment.getStage();
+    DaoFactory daoFactory = DynamoDbDaoFactory.getInstance(stage);
+    return new GraphResource(daoFactory.getEdgeDao());
+  }
+
+  @VisibleForTesting
+  GraphResource(EdgeDao edgeDao) {
+    this.edgeDao = edgeDao;
+  }
 
   /**
    * {@inheritDoc}
