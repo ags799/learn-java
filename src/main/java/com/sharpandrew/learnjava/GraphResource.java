@@ -17,7 +17,6 @@ public final class GraphResource implements GraphService {
   private final EdgeDao edgeDao;
 
   /** Create an instance. */
-  // TODO: ensure this is how the resource is created by {@link Handler}.
   public static GraphResource create() {
     String stage = ServerlessEnvironment.getStage();
     DaoFactory daoFactory = DynamoDbDaoFactory.getInstance(stage);

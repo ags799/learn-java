@@ -9,7 +9,7 @@ public final class DynamoDbDaoFactory implements DaoFactory {
   public static DynamoDbDaoFactory getInstance(String stage) {
     String tableNamePrefix = stage + '-';
     if (instance == null) {
-      instance = new DynamoDbDaoFactory(stage);
+      instance = new DynamoDbDaoFactory(tableNamePrefix);
     } else if (!tableNamePrefix.equals(instance.tableNamePrefix)) {
       String message = String.format(
           "Attempted to create a DynamoDbDaoFactory with table name prefix '%s' but an instance "
