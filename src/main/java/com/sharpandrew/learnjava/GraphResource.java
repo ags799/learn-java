@@ -9,24 +9,15 @@ import com.sharpandrew.learnjava.storage.EdgeDao;
 import com.sharpandrew.learnjava.storage.StorageEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
-@Path("/api/graph")
-public class GraphResource {
+public class GraphResource implements GraphService {
   private final EdgeDao edgeDao = DynamoDbEdgeDao.getInstance();
 
-  /** Returns the graph for given ID. */
-  @GET
-  @Path("/{id}")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Graph get(@PathParam("id") String id) {
+  /**
+   * {@inheritDoc}
+   */
+  public Graph get(String id) {
     Set<StorageEdge> storageEdges = edgeDao.get(id);
     if (storageEdges.isEmpty()) {
       throw new NotFoundException();
@@ -41,10 +32,9 @@ public class GraphResource {
     }
   }
 
-  /** Returns all graphs. */
-  @GET
-  @Path("/")
-  @Produces(MediaType.APPLICATION_JSON)
+  /**
+   * {@inheritDoc}
+   */
   public Set<Graph> getAll() {
     Set<StorageEdge> storageEdges = edgeDao.getAll();
     return storageEdges.stream()
@@ -63,10 +53,10 @@ public class GraphResource {
         .collect(Collectors.toSet());
   }
 
-  /** Adds a graph. */
-  @PUT
-  @Path("/{id}")
-  public void put(@PathParam("id") String id, Graph graph) {
+  /**
+   * {@inheritDoc}
+   */
+  public void put(String id, Graph graph) {
     Set<StorageEdge> storageEdges = graph.edges().stream()
         .map(edge -> {
           StorageEdge storageEdge = new StorageEdge();
@@ -79,10 +69,10 @@ public class GraphResource {
     edgeDao.post(storageEdges);
   }
 
-  /** Deletes the graph for given ID. */
-  @DELETE
-  @Path("/{id}")
-  public void delete(@PathParam("id") String id) {
+  /**
+   * {@inheritDoc}
+   */
+  public void delete(String id) {
     edgeDao.delete(id);
   }
 }
