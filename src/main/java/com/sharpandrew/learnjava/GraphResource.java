@@ -18,8 +18,8 @@ public final class GraphResource implements GraphService {
 
   /** Create an instance. */
   public static GraphResource create() {
-    String stage = ServerlessEnvironment.getStage();
-    DaoFactory daoFactory = DynamoDbDaoFactory.getInstance(stage);
+    String edgesTableName = ServerlessEnvironment.getEdgesTableName();
+    DaoFactory daoFactory = DynamoDbDaoFactory.getInstance(edgesTableName);
     return new GraphResource(daoFactory.getEdgeDao());
   }
 
