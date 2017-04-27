@@ -1,6 +1,6 @@
 service: learn-java
 
-frameworkVersion: "=1.12.0"
+frameworkVersion: "=1.12.1"
 
 custom:
   defaultStage: dev
