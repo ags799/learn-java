@@ -27,7 +27,7 @@ To run integration tests, first deploy your code to some development stack
 This command will print a URL for the new stack. Run the tests with the URL for that stack in the
 `LEARN_JAVA_URL` environment variable.
 
-    LEARN_JAVA_URL=http://something.com/api ./gradlew integrationTest
+    LEARN_JAVA_URL=http://something.com/api/{proxy+} ./gradlew integrationTest
 
 Remove your deployment with
 
