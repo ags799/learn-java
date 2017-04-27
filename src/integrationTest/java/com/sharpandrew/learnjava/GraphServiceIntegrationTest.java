@@ -11,6 +11,7 @@ import org.junit.Test;
 public class GraphServiceIntegrationTest {
   private String url;
 
+  /** Checkstyle wants javadoc. */
   @Before
   public void setUp() throws Exception {
     String dirtyUrl = System.getenv("LEARN_JAVA_URL");
@@ -21,6 +22,7 @@ public class GraphServiceIntegrationTest {
 
   @Test
   public void initiallyThereAreNoGraphs() throws Exception {
-    assertThat(IOUtils.toString(new URL(url + "graph").openStream(), StandardCharsets.UTF_8)).isEqualTo("[]");
+    assertThat(IOUtils.toString(new URL(url + "graph").openStream(), StandardCharsets.UTF_8))
+        .isEqualTo("[]");
   }
 }
