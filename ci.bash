@@ -11,10 +11,11 @@ stage="ci-$branch"
 ./gradlew deploy "-Pstage=$stage"
 url="$(serverless info --stage "$stage" | grep -C 1 '^endpoints:' | sed -n 3p | cut -d' ' -f5)"
 LEARN_JAVA_URL="$url" ./gradlew integrationTest
+./gradlew removeDeployment "-Pstage=$stage"
 
 # continuous deployment
 if [[ "$branch" = 'master' ]]; then
-  ./gradlew deploy -Pstage=prod -Pregion=us-east-1
+  ./gradlew deploy -Pstage=prod
 fi
 
 installServerless() {
