@@ -44,6 +44,7 @@ dependencies {
   compile 'com.fasterxml.jackson.core:jackson-annotations'
   compile 'com.google.guava:guava'
   compile 'com.jrestless.aws:jrestless-aws-gateway-handler'
+  compile 'io.swagger:swagger-jersey2-jaxrs'
   compile 'org.glassfish.jersey.media:jersey-media-json-jackson'
   compile 'org.slf4j:jul-to-slf4j'
   compile 'org.slf4j:slf4j-log4j12'
