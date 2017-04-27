@@ -13,7 +13,9 @@ public final class DynamoDbDaoFactory implements DaoFactory {
     } else if (!tableNamePrefix.equals(instance.tableNamePrefix)) {
       String message = String.format(
           "Attempted to create a DynamoDbDaoFactory with table name prefix '%s' but an instance "
-          + "with table name prefix '%s' already exists", stage, instance.tableNamePrefix);
+            + "with table name prefix '%s' already exists",
+          tableNamePrefix,
+          instance.tableNamePrefix);
       throw new IllegalArgumentException(message);
     }
     return instance;
