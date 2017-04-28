@@ -85,7 +85,7 @@ task deploy(group: 'deployment', dependsOn: 'deployable') {
   doLast {
     new ByteArrayOutputStream().withStream { output ->
       exec {
-        commandLine = ['serverless', 'deploy', '--stage', "${stage}", '--region', "${region}"]
+        commandLine = ['serverless', 'deploy', '--stage', stage, '--region', region]
         standardOutput = output
       }
       mkdir 'src/integrationTest/resources'
@@ -97,5 +97,5 @@ task deploy(group: 'deployment', dependsOn: 'deployable') {
 }
 
 task removeDeployment(type: Exec, group: 'deployment') {
-  commandLine 'serverless', 'remove', '--stage', "${stage}", '--region', "${region}"
+  commandLine 'serverless', 'remove', '--stage', stage, '--region', region
 }
