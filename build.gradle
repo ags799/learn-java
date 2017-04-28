@@ -85,8 +85,7 @@ task deploy(group: 'deployment', dependsOn: 'deployable') {
   doLast {
     new ByteArrayOutputStream().withStream { output ->
       exec {
-        commandLine = [
-            "${serverlessExecutable}", 'deploy', '--stage', "${stage}", '--region', "${region}"]
+        commandLine = ['serverless', 'deploy', '--stage', "${stage}", '--region', "${region}"]
         standardOutput = output
       }
       mkdir 'src/integrationTest/resources'

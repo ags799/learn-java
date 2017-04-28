@@ -23,15 +23,13 @@ installServerless() {
 installServerless
 branch="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
 stage="ci-$branch"
-serverlessExecutable="$(which serverless)"
-./gradlew --stacktrace --info deploy "-Pstage=$stage" "-PserverlessExecutable=$serverlessExecutable"
-url="$(serverless info --stage "$stage" | grep -C 1 '^endpoints:' | sed -n 3p | cut -d' ' -f5)"
-LEARN_JAVA_URL="$url" ./gradlew integrationTest || \
-    (./gradlew removeDeployment "-Pstage=$stage" "-PserverlessExecutable=$serverlessExecutable" && exit 1)
-./gradlew removeDeployment "-Pstage=$stage" "-PserverlessExecutable=$serverlessExecutable"
+mkdir -p src/integrationTest/resources
+serverless deploy --stage "$stage" > src/integrationTest/resources/most-recent-deployment-output.txt
+./gradlew integrationTest || (serverless remove --stage "$stage" && exit 1)
+serverless remove --stage "$stage"
 
 # continuous deployment
 if [[ "$branch" = 'master' ]]; then
-  ./gradlew --stacktrace --info deploy -Pstage=prod "-PserverlessExecutable=$serverlessExecutable"
+  serverless deploy --stage prod
 fi
 
