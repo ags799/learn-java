@@ -24,6 +24,7 @@ installServerless
 branch="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
 stage="ci-$branch"
 serverless info
+which serverless
 ./gradlew --stacktrace --info deploy "-Pstage=$stage"
 url="$(serverless info --stage "$stage" | grep -C 1 '^endpoints:' | sed -n 3p | cut -d' ' -f5)"
 LEARN_JAVA_URL="$url" ./gradlew integrationTest ||
