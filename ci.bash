@@ -18,6 +18,7 @@ installServerless() {
 }
 
 ./gradlew assemble check
+exit 0  # https://github.com/ags799/learn-java/issues/67
 
 # integration tests
 installServerless
