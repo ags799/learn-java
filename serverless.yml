@@ -5,6 +5,7 @@ frameworkVersion: "=1.12.1"
 custom:
   defaultStage: dev
   defaultRegion: us-east-1
+  usersTableName: ${self:service}-${self:provider.stage}-users
   edgesTableName: ${self:service}-${self:provider.stage}-edges
 
 provider:
@@ -23,6 +24,7 @@ provider:
         - dynamodb:BatchWriteItem
       Resource:
         - "Fn::Join": ["", ["arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/${self:custom.edgesTableName}"]]
+        - "Fn::Join": ["", ["arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/${self:custom.usersTableName}"]]
 
 package:
   artifact: build/distributions/learn-java.zip
@@ -32,6 +34,7 @@ functions:
     handler: com.sharpandrew.learnjava.Handler
     environment:
       EDGES_TABLE_NAME: ${self:custom.edgesTableName}
+      USERS_TABLE_NAME: ${self:custom.usersTableName}
     events:
       - http:
           path: api/{proxy+}
@@ -48,6 +51,19 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: edgeId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    users:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.usersTableName}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

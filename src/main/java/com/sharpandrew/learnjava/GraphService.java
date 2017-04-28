@@ -18,7 +18,6 @@ public interface GraphService {
   Graph get(@PathParam("id") String id);
 
   @GET
-  @Path("/")
   @Produces(MediaType.APPLICATION_JSON)
   Set<Graph> getAll();
 
