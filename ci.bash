@@ -24,6 +24,7 @@ installServerless
 branch="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
 stage="ci-${branch//\//-}"
 mkdir -p src/integrationTest/resources
+./gradlew deployable
 SLS_DEBUG=true serverless deploy --stage "$stage" --verbose > src/integrationTest/resources/most-recent-deployment-output.txt
 ./gradlew integrationTest || (serverless remove --stage "$stage" && exit 1)
 serverless remove --stage "$stage"
