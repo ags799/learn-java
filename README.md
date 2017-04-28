@@ -16,6 +16,19 @@ Verify your code with
 
 Deploy your code with
 
-    ./gradlew deploy
+    ./gradlew deploy -Pstage=my-dev-stack
 
+`my-dev-stack` should be unique to you. Using your username is a good idea.
 The output of the deploy command will indicate the URL to which the code was deployed.
+
+To run integration tests, first deploy your code to some development stack
+
+    ./gradlew deploy -Pstage=my-dev-stack
+
+Then run the tests with
+
+    ./gradlew integrationTest
+
+Remove your deployment with
+
+    ./gradlew removeDeployment -Pstage=my-dev-stack
