@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava.storage;
+package com.sharpandrew.learnjava.graph.storage;
 
 import java.util.Set;
 

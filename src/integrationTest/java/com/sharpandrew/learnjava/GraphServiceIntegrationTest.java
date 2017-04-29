@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class GraphServiceIntegrationTest {
-  private GraphService graphService;
+  private com.sharpandrew.learnjava.graph.GraphService graphService;
 
   @Before
   public void setUp() throws Exception {
@@ -22,7 +22,7 @@ public class GraphServiceIntegrationTest {
     graphService = Feign.builder()
         .decoder(new JacksonDecoder())
       .contract(new JAXRSContract())
-      .target(GraphService.class, url);
+      .target(com.sharpandrew.learnjava.graph.GraphService.class, url);
   }
 
   @Test

@@ -1,13 +1,13 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.graph;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.sharpandrew.learnjava.models.Edge;
-import com.sharpandrew.learnjava.models.Graph;
-import com.sharpandrew.learnjava.models.ImmutableEdge;
-import com.sharpandrew.learnjava.models.ImmutableGraph;
-import com.sharpandrew.learnjava.storage.DynamoDbEdgeDao;
-import com.sharpandrew.learnjava.storage.EdgeDao;
-import com.sharpandrew.learnjava.storage.StorageEdge;
+import com.sharpandrew.learnjava.graph.model.Edge;
+import com.sharpandrew.learnjava.graph.model.Graph;
+import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
+import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
+import com.sharpandrew.learnjava.graph.storage.DynamoDbEdgeDao;
+import com.sharpandrew.learnjava.graph.storage.EdgeDao;
+import com.sharpandrew.learnjava.graph.storage.StorageEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.NotFoundException;
