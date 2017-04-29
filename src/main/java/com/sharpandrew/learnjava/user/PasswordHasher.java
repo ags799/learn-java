@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.user;
 
 public interface PasswordHasher {
   String createSalt();

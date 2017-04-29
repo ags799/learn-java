@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava.models;
+package com.sharpandrew.learnjava.graph.model;
 
 import static com.google.common.base.Preconditions.checkState;
 

@@ -1,6 +1,6 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.graph;
 
-import com.sharpandrew.learnjava.models.Graph;
+import com.sharpandrew.learnjava.graph.model.Graph;
 import java.util.Set;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;

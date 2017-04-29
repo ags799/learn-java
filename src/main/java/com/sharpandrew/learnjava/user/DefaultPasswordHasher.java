@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.user;
 
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;

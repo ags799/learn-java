@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava.storage;
+package com.sharpandrew.learnjava.user.storage;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;

@@ -1,11 +1,12 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.user;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.sharpandrew.learnjava.storage.DynamoDbUserDao;
-import com.sharpandrew.learnjava.storage.StorageUser;
-import com.sharpandrew.learnjava.storage.UserDao;
+import com.sharpandrew.learnjava.user.model.AccessTokenAndExpiration;
+import com.sharpandrew.learnjava.user.storage.DynamoDbUserDao;
+import com.sharpandrew.learnjava.user.storage.StorageUser;
+import com.sharpandrew.learnjava.user.storage.UserDao;
 import java.util.Objects;
 
 public final class UserResource implements UserService {

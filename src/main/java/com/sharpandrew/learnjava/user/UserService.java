@@ -1,5 +1,6 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.user;
 
+import com.sharpandrew.learnjava.user.model.AccessTokenAndExpiration;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
