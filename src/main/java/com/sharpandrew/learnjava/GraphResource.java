@@ -15,13 +15,13 @@ import javax.ws.rs.NotFoundException;
 public final class GraphResource implements GraphService {
   private final EdgeDao edgeDao;
 
-  public static GraphResource create() {
-    return new GraphResource(DynamoDbEdgeDao.getInstance());
-  }
-
   @VisibleForTesting
   GraphResource(EdgeDao edgeDao) {
     this.edgeDao = edgeDao;
+  }
+
+  public static GraphResource create() {
+    return new GraphResource(DynamoDbEdgeDao.getInstance());
   }
 
   public Graph get(String id) {

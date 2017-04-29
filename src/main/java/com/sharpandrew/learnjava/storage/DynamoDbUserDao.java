@@ -1,24 +1,48 @@
 package com.sharpandrew.learnjava.storage;
 
-import java.util.UUID;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
+import com.google.common.annotations.VisibleForTesting;
+import com.sharpandrew.learnjava.ServerlessEnvironment;
 
-public class DynamoDbUserDao implements UserDao {
-  public static UserDao getInstance() {
-    throw new UnsupportedOperationException();
+public final class DynamoDbUserDao implements UserDao {
+  private static DynamoDbUserDao instance;
+
+  private final DynamoDBMapper mapper;
+
+  @VisibleForTesting
+  DynamoDbUserDao(DynamoDBMapper mapper) {
+    this.mapper = mapper;
   }
 
-  @Override
-  public boolean containsUuid(UUID uuid) {
-    throw new UnsupportedOperationException();
+  public static UserDao getInstance() {
+    if (instance == null) {
+      String tableName = ServerlessEnvironment.getUserTableName();
+      DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
+          .withTableNameOverride(
+              DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(tableName))
+          .build();
+      DynamoDBMapper mapper = new DynamoDBMapper(
+          AmazonDynamoDBClientBuilder.defaultClient(), config);
+      instance = new DynamoDbUserDao(mapper);
+      return instance;
+    } else {
+      return instance;
+    }
   }
 
   @Override
   public boolean containsEmail(String email) {
-    throw new UnsupportedOperationException();
+    return mapper.load(StorageUser.class, email) != null;
   }
 
   @Override
-  public void put(UUID uuid, String email, String passwordHash, String salt) {
-    throw new UnsupportedOperationException();
+  public void put(String email, String passwordHash, String salt) {
+    StorageUser storageUser = new StorageUser();
+    storageUser.setEmail(email);
+    storageUser.setPasswordHash(passwordHash);
+    storageUser.setSalt(salt);
+    mapper.save(storageUser);
   }
 }

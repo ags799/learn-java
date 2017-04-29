@@ -9,31 +9,27 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.UUID;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 public final class UserResource implements UserService {
   private final UserDao userDao;
 
-  /** Create an instance. */
-  public static UserResource create() {
-    return new UserResource(DynamoDbUserDao.getInstance());
-  }
-
   @VisibleForTesting
   UserResource(UserDao userDao) {
     this.userDao = userDao;
   }
 
+  public static UserResource create() {
+    return new UserResource(DynamoDbUserDao.getInstance());
+  }
+
   @Override
   public void put(String email, String password) {
     checkArgument(!userDao.containsEmail(email), "A user with email '%s' already exists.", email);
-    UUID uuid = UUID.fromString(email);
-    assert !userDao.containsUuid(uuid);
     String salt = new String(new SecureRandom().generateSeed(32), StandardCharsets.UTF_8);
     String passwordHash = getPasswordHash(password, salt);
-    userDao.put(uuid, email, passwordHash, salt);
+    userDao.put(email, passwordHash, salt);
   }
 
   // http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
