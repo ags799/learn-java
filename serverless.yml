@@ -31,7 +31,7 @@ package:
 
 functions:
   all:
-    handler: com.sharpandrew.learnjava.Handler
+    handler: com.sharpandrew.learnjava.serverless.Handler
     environment:
       EDGES_TABLE_NAME: ${self:custom.edgesTableName}
       USERS_TABLE_NAME: ${self:custom.usersTableName}

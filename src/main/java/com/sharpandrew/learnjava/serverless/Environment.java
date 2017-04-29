@@ -1,7 +1,7 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.serverless;
 
 // Values here must match serverless.yml.
-public final class ServerlessEnvironment {
+public final class Environment {
   public static String getEdgeTableName() {
     return System.getenv("EDGES_TABLE_NAME");
   }
