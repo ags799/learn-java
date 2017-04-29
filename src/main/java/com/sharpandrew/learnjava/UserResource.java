@@ -25,6 +25,11 @@ public final class UserResource implements UserService {
   }
 
   @Override
+  public AccessTokenAndExpiration login(String email, String password) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void put(String email, String password) {
     checkArgument(!userDao.containsEmail(email), "A user with email '%s' already exists.", email);
     String salt = new String(new SecureRandom().generateSeed(32), StandardCharsets.UTF_8);
