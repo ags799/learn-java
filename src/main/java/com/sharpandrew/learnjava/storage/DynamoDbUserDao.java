@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.google.common.annotations.VisibleForTesting;
-import com.sharpandrew.learnjava.serverless.ServerlessEnvironment;
+import com.sharpandrew.learnjava.serverless.Environment;
 
 public final class DynamoDbUserDao implements UserDao {
   private static DynamoDbUserDao instance;
@@ -18,7 +18,7 @@ public final class DynamoDbUserDao implements UserDao {
 
   public static UserDao getInstance() {
     if (instance == null) {
-      String tableName = ServerlessEnvironment.getUserTableName();
+      String tableName = Environment.getUserTableName();
       DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
           .withTableNameOverride(
               DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(tableName))

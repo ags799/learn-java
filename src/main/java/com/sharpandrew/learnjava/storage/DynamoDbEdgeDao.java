@@ -9,7 +9,7 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
-import com.sharpandrew.learnjava.serverless.ServerlessEnvironment;
+import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public final class DynamoDbEdgeDao implements EdgeDao {
 
   public static DynamoDbEdgeDao getInstance() {
     if (instance == null) {
-      String tableName = ServerlessEnvironment.getEdgeTableName();
+      String tableName = Environment.getEdgeTableName();
       DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
           .withTableNameOverride(
               DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(tableName))
