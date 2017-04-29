@@ -38,6 +38,11 @@ public final class DynamoDbUserDao implements UserDao {
   }
 
   @Override
+  public StorageUser get(String email) {
+    return mapper.load(StorageUser.class, email);
+  }
+
+  @Override
   public void put(String email, String passwordHash, String salt) {
     StorageUser storageUser = new StorageUser();
     storageUser.setEmail(email);
