@@ -1,7 +1,9 @@
 package com.sharpandrew.learnjava.user;
 
-import com.sharpandrew.learnjava.user.model.AccessTokenAndExpiration;
+import java.util.Optional;
 
 public interface AccessTokenManager {
-  AccessTokenAndExpiration createAccessTokenAndExpiration(String email);
+  String createAccessToken(String email);
+
+  Optional<String> getEmail(String token);
 }

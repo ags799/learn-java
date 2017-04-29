@@ -3,7 +3,6 @@ package com.sharpandrew.learnjava.user;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.sharpandrew.learnjava.user.model.AccessTokenAndExpiration;
 import com.sharpandrew.learnjava.user.storage.DynamoDbUserDao;
 import com.sharpandrew.learnjava.user.storage.StorageUser;
 import com.sharpandrew.learnjava.user.storage.UserDao;
@@ -24,20 +23,20 @@ public final class UserResource implements UserService {
 
   public static UserResource create() {
     return new UserResource(
-        new DefaultAccessTokenManager(),
+        DefaultAccessTokenManager.create(),
         new DefaultPasswordHasher(),
         DynamoDbUserDao.getInstance());
   }
 
   @Override
-  public AccessTokenAndExpiration login(String email, String password) {
+  public String login(String email, String password) {
     StorageUser storageUser = userDao.get(email);
     checkArgument(storageUser != null, "No user with email '%s' exists.", email);
     String passwordHash = passwordHasher.getPasswordHash(password, storageUser.getSalt());
     checkArgument(
         Objects.equals(passwordHash, storageUser.getPasswordHash()),
         "Incorrect password.");
-    return accessTokenManager.createAccessTokenAndExpiration(storageUser.getEmail());
+    return accessTokenManager.createAccessToken(storageUser.getEmail());
   }
 
   @Override
