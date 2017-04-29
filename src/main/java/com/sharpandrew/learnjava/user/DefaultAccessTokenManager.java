@@ -1,4 +1,6 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.user;
+
+import com.sharpandrew.learnjava.user.model.AccessTokenAndExpiration;
 
 public class DefaultAccessTokenManager implements AccessTokenManager {
   @Override

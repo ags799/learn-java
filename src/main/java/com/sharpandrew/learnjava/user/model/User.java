@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava.models;
+package com.sharpandrew.learnjava.user.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

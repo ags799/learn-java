@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava.storage;
+package com.sharpandrew.learnjava.user.storage;
 
 public interface UserDao {
   boolean containsEmail(String email);
