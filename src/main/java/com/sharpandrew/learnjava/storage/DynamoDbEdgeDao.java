@@ -18,9 +18,14 @@ public final class DynamoDbEdgeDao implements EdgeDao {
 
   private final DynamoDBMapper mapper;
 
+  @VisibleForTesting
+  DynamoDbEdgeDao(DynamoDBMapper mapper) {
+    this.mapper = mapper;
+  }
+
   public static DynamoDbEdgeDao getInstance() {
     if (instance == null) {
-      String tableName = ServerlessEnvironment.getEdgesTableName();
+      String tableName = ServerlessEnvironment.getEdgeTableName();
       DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
           .withTableNameOverride(
               DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(tableName))
@@ -32,11 +37,6 @@ public final class DynamoDbEdgeDao implements EdgeDao {
     } else {
       return instance;
     }
-  }
-
-  @VisibleForTesting
-  DynamoDbEdgeDao(DynamoDBMapper mapper) {
-    this.mapper = mapper;
   }
 
   @Override
