@@ -33,7 +33,9 @@ public final class UserResource implements UserService {
     StorageUser storageUser = userDao.get(email);
     checkArgument(storageUser != null, "No user with email '%s' exists.", email);
     String passwordHash = passwordHasher.getPasswordHash(password, storageUser.getSalt());
-    checkArgument(Objects.equals(passwordHash, storageUser.getPasswordHash()), "Incorrect password.");
+    checkArgument(
+        Objects.equals(passwordHash, storageUser.getPasswordHash()),
+        "Incorrect password.");
     return accessTokenManager.createAccessTokenAndExpiration(storageUser.getEmail());
   }
 
