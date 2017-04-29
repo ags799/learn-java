@@ -16,7 +16,6 @@ import org.junit.Test;
 public class GraphServiceIntegrationTest {
   private GraphService graphService;
 
-  /** Checkstyle wants javadoc. */
   @Before
   public void setUp() throws Exception {
     String url = getUrl();

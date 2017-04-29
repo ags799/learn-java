@@ -9,20 +9,29 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
+import com.sharpandrew.learnjava.ServerlessEnvironment;
 import java.util.List;
 import java.util.Set;
 
-final class DynamoDbEdgeDao implements EdgeDao {
+public final class DynamoDbEdgeDao implements EdgeDao {
+  private static DynamoDbEdgeDao instance = null;
+
   private final DynamoDBMapper mapper;
 
-  static DynamoDbEdgeDao create(String edgesTableName) {
-    DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
-        .withTableNameOverride(
-            DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(edgesTableName))
-        .build();
-    DynamoDBMapper mapper = new DynamoDBMapper(
-        AmazonDynamoDBClientBuilder.defaultClient(), config);
-    return new DynamoDbEdgeDao(mapper);
+  public static DynamoDbEdgeDao getInstance() {
+    if (instance == null) {
+      String tableName = ServerlessEnvironment.getEdgesTableName();
+      DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
+          .withTableNameOverride(
+              DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(tableName))
+          .build();
+      DynamoDBMapper mapper = new DynamoDBMapper(
+          AmazonDynamoDBClientBuilder.defaultClient(), config);
+      instance = new DynamoDbEdgeDao(mapper);
+      return instance;
+    } else {
+      return instance;
+    }
   }
 
   @VisibleForTesting
