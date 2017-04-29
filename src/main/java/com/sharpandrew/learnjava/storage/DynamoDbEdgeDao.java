@@ -9,7 +9,7 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
-import com.sharpandrew.learnjava.ServerlessEnvironment;
+import com.sharpandrew.learnjava.serverless.ServerlessEnvironment;
 import java.util.List;
 import java.util.Set;
 

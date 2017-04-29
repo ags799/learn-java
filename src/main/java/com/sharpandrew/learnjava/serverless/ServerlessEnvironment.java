@@ -1,4 +1,4 @@
-package com.sharpandrew.learnjava;
+package com.sharpandrew.learnjava.serverless;
 
 // Values here must match serverless.yml.
 public final class ServerlessEnvironment {

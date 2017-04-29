@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.google.common.annotations.VisibleForTesting;
-import com.sharpandrew.learnjava.ServerlessEnvironment;
+import com.sharpandrew.learnjava.serverless.ServerlessEnvironment;
 
 public final class DynamoDbUserDao implements UserDao {
   private static DynamoDbUserDao instance;
