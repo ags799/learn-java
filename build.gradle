@@ -71,6 +71,28 @@ findbugs {
   excludeFilter file('findbugs-exclude.xml')
 }
 
+// http://stackoverflow.com/a/41101151
+task checkFindBugsReport {
+  doLast {
+    def xmlReport = findbugsMain.reports.xml
+    if (!xmlReport.destination.exists()) return;
+    def slurped = new XmlSlurper().parse(xmlReport.destination)
+    def report = ""
+    slurped['BugInstance'].eachWithIndex { bug, index ->
+      report += "${index + 1}. Found bug risk ${bug.@'type'} of category ${bug.@'category'} "
+      report += "in the following places"
+      bug['SourceLine'].each { place ->
+        report += "\n       ${place.@'classname'} at lines ${place.@'start'}:${place.@'end'}"
+      }
+      report += '\n '
+    }
+    if (report.length() > 1) {
+      logger.error "[FINDBUGS]\n ${report}"
+    }
+  }
+}
+findbugsMain.finalizedBy checkFindBugsReport
+
 task deployable(type: Zip, group: 'deployment') {
   // The path to this file must be set in the serverless.yml file under package.artifact.
   baseName = "learn-java"
