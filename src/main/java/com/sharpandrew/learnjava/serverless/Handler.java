@@ -13,7 +13,6 @@ public final class Handler extends GatewayRequestObjectHandler {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
     ResourceConfig resourceConfig = new ResourceConfig()
-//        .registerInstances(UserResource.create())
         .registerInstances(GraphResource.create())
         .registerInstances(PathResource.create())
         .register(GatewayFeature.class);
