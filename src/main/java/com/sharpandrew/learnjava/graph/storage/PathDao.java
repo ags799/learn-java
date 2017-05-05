@@ -1,16 +1,9 @@
 package com.sharpandrew.learnjava.graph.storage;
 
-import com.sharpandrew.learnjava.graph.model.Path;
-import java.util.Set;
+import com.sharpandrew.learnjava.graph.model.GraphPath;
 
 public interface PathDao {
-  Path get(String pathId);
+  GraphPath get(String pathId);
 
-  Set<Path> getForGraph(String graphId);
-
-  Set<Path> getAll();
-
-  void put(String graphId, String pathId, Path path);
-
-  void delete(String pathId);
+  void put(String pathId, GraphPath graphPath);
 }

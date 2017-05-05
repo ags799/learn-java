@@ -5,7 +5,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 
 public class StoragePathEdge {
   private String pathIdAndPlace;
-  private String graphId;
   private String pathId;
   private int place;
   private int startVertex;
@@ -18,15 +17,6 @@ public class StoragePathEdge {
 
   public void setPathIdAndPlace(String pathIdAndPlace) {
     this.pathIdAndPlace = pathIdAndPlace;
-  }
-
-  @DynamoDBAttribute(attributeName = "graphId")
-  public String getGraphId() {
-    return graphId;
-  }
-
-  public void setGraphId(String graphId) {
-    this.graphId = graphId;
   }
 
   @DynamoDBAttribute(attributeName = "pathId")
