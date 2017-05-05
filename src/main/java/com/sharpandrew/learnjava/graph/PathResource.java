@@ -23,7 +23,7 @@ public class PathResource implements PathService {
   }
 
   @Override
-  public void put(String id, GraphPath path) {
-    pathDao.put(id, path);
+  public String put(GraphPath path) {
+    return pathDao.post(path);
   }
 }

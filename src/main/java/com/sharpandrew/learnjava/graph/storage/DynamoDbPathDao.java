@@ -14,6 +14,7 @@ import com.sharpandrew.learnjava.graph.model.ImmutableGraphPath;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -62,7 +63,8 @@ public class DynamoDbPathDao implements PathDao {
   }
 
   @Override
-  public void put(String pathId, GraphPath graphPath) {
+  public String post(GraphPath graphPath) {
+    String pathId = UUID.randomUUID().toString();
     Set<StoragePathEdge> storagePathEdges = IntStream
         .range(0, graphPath.verticesStartToFinish().size() - 1)
         .boxed()
@@ -86,6 +88,8 @@ public class DynamoDbPathDao implements PathDao {
         stringBuilder.append(batch.getException());
       });
       throw new RuntimeException(stringBuilder.toString());
+    } else {
+      return pathId;
     }
   }
 }

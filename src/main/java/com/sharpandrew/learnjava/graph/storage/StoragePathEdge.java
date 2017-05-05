@@ -1,25 +1,16 @@
 package com.sharpandrew.learnjava.graph.storage;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 
 public class StoragePathEdge {
-  private String pathIdAndPlace;
   private String pathId;
   private int place;
   private int startVertex;
   private int endVertex;
 
-  @DynamoDBRangeKey(attributeName =  "pathIdAndPlace")
-  public String getPathIdAndPlace() {
-    return pathIdAndPlace;
-  }
-
-  public void setPathIdAndPlace(String pathIdAndPlace) {
-    this.pathIdAndPlace = pathIdAndPlace;
-  }
-
-  @DynamoDBAttribute(attributeName = "pathId")
+  @DynamoDBHashKey(attributeName = "pathId")
   public String getPathId() {
     return pathId;
   }
@@ -28,7 +19,7 @@ public class StoragePathEdge {
     this.pathId = pathId;
   }
 
-  @DynamoDBAttribute(attributeName = "place")
+  @DynamoDBRangeKey(attributeName =  "place")
   public int getPlace() {
     return place;
   }

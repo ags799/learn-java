@@ -5,5 +5,6 @@ import com.sharpandrew.learnjava.graph.model.GraphPath;
 public interface PathDao {
   GraphPath get(String pathId);
 
-  void put(String pathId, GraphPath graphPath);
+  /** Returns the path's ID. */
+  String post(GraphPath graphPath);
 }

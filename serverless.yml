@@ -40,7 +40,7 @@ functions:
       PATH_TABLE_NAME: ${self:custom.pathTableName}
     events:
       - http:
-          graphPath: api/{proxy+}
+          path: api/{proxy+}
           method: any
 
 resources:
@@ -76,10 +76,14 @@ resources:
       Properties:
         TableName: ${self:custom.pathTableName}
         AttributeDefinitions:
-          - AttributeName: pathIdAndPlace
+          - AttributeName: pathId
             AttributeType: S
+          - AttributeName: place
+            AttributeType: N
         KeySchema:
-          - AttributeName: pathIdAndPlace
+          - AttributeName: pathId
+            KeyType: HASH
+          - AttributeName: place
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1

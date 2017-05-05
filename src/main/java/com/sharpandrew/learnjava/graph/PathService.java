@@ -15,7 +15,8 @@ public interface PathService {
   @Produces(MediaType.APPLICATION_JSON)
   GraphPath get(@PathParam("id") String id);
 
+  /** Returns the path's ID. */
   @PUT
-  @Path("/{id")
-  void put(@PathParam("id") String id, GraphPath path);
+  @Path("/")
+  String put(GraphPath path);
 }
