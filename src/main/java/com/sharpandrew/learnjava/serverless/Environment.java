@@ -6,6 +6,10 @@ public final class Environment {
     return System.getenv("EDGES_TABLE_NAME");
   }
 
+  public static String getPathTableName() {
+    return System.getenv("PATH_TABLE_NAME");
+  }
+
   public static String getUserTableName() {
     return System.getenv("USERS_TABLE_NAME");
   }
