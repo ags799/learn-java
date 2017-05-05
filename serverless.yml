@@ -7,6 +7,7 @@ custom:
   defaultRegion: us-east-1
   usersTableName: ${self:service}-${self:provider.stage}-users
   edgesTableName: ${self:service}-${self:provider.stage}-edges
+  pathTableName: ${self:service}-${self:provider.stage}-graphPath
 
 provider:
   name: aws
@@ -25,6 +26,7 @@ provider:
       Resource:
         - "Fn::Join": ["", ["arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/${self:custom.edgesTableName}"]]
         - "Fn::Join": ["", ["arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/${self:custom.usersTableName}"]]
+        - "Fn::Join": ["", ["arn:aws:dynamodb:", {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":table/${self:custom.pathTableName}"]]
 
 package:
   artifact: build/distributions/learn-java.zip
@@ -35,6 +37,7 @@ functions:
     environment:
       EDGES_TABLE_NAME: ${self:custom.edgesTableName}
       USERS_TABLE_NAME: ${self:custom.usersTableName}
+      PATH_TABLE_NAME: ${self:custom.pathTableName}
     events:
       - http:
           path: api/{proxy+}
@@ -65,6 +68,23 @@ resources:
         KeySchema:
           - AttributeName: email
             KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    graphPath:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.pathTableName}
+        AttributeDefinitions:
+          - AttributeName: pathId
+            AttributeType: S
+          - AttributeName: place
+            AttributeType: N
+        KeySchema:
+          - AttributeName: pathId
+            KeyType: HASH
+          - AttributeName: place
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
