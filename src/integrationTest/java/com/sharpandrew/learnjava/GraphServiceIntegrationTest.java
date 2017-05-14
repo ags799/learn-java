@@ -3,8 +3,12 @@ package com.sharpandrew.learnjava;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.common.io.Files;
+import com.sharpandrew.learnjava.graph.model.Graph;
+import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
+import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
 import feign.jaxrs.JAXRSContract;
 import java.io.File;
 import java.io.IOException;
@@ -18,16 +22,26 @@ public class GraphServiceIntegrationTest {
 
   @Before
   public void setUp() throws Exception {
-    String url = getUrl();
+    String url = "https://c3nkp8tiu5.execute-api.us-east-1.amazonaws.com/dev/";
     graphService = Feign.builder()
         .decoder(new JacksonDecoder())
-      .contract(new JAXRSContract())
-      .target(com.sharpandrew.learnjava.graph.GraphService.class, url);
+        .encoder(new JacksonEncoder())
+        .contract(new JAXRSContract())
+        .target(com.sharpandrew.learnjava.graph.GraphService.class, url);
   }
 
   @Test
   public void initiallyThereAreNoGraphs() throws Exception {
     assertThat(graphService.getAll()).isEmpty();
+  }
+
+  @Test
+  public void put() throws Exception {
+    Graph graph = ImmutableGraph.builder()
+        .addEdges(ImmutableEdge.builder().startVertex(0).endVertex(1).build())
+        .build();
+    graphService.put("1", graph);
+    assertThat(graphService.getAll()).containsExactly(graph);
   }
 
   private String getUrl() throws IOException {

@@ -2,6 +2,7 @@ package com.sharpandrew.learnjava.graph;
 
 import com.sharpandrew.learnjava.graph.model.Graph;
 import java.util.Set;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -23,6 +24,7 @@ public interface GraphService {
 
   @PUT
   @Path("/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
   void put(@PathParam("id") String id, Graph graph);
 
   @DELETE

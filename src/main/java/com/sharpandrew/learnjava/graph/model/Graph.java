@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Optional;
 import java.util.Set;
 import org.immutables.value.Value;
 
@@ -13,6 +14,8 @@ import org.immutables.value.Value;
 @Value.Style(jdkOnly = true)
 public abstract class Graph {
   public abstract Set<Edge> edges();
+
+  public abstract Optional<String> name();
 
   @Value.Check
   public void check() {
