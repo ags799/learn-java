@@ -2,6 +2,8 @@ package com.sharpandrew.learnjava;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.google.common.io.Files;
 import com.sharpandrew.learnjava.graph.model.Graph;
 import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
@@ -24,8 +26,8 @@ public class GraphServiceIntegrationTest {
   public void setUp() throws Exception {
     String url = "https://c3nkp8tiu5.execute-api.us-east-1.amazonaws.com/dev/";
     graphService = Feign.builder()
-        .decoder(new JacksonDecoder())
-        .encoder(new JacksonEncoder())
+        .decoder(new JacksonDecoder(new ObjectMapper().registerModules(new Jdk8Module())))
+        .encoder(new JacksonEncoder(new ObjectMapper().registerModules(new Jdk8Module())))
         .contract(new JAXRSContract())
         .target(com.sharpandrew.learnjava.graph.GraphService.class, url);
   }
@@ -40,6 +42,8 @@ public class GraphServiceIntegrationTest {
     Graph graph = ImmutableGraph.builder()
         .addEdges(ImmutableEdge.builder().startVertex(0).endVertex(1).build())
         .build();
+    ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module());
+    Graph sameGraph = objectMapper.readValue(objectMapper.writeValueAsString(graph), Graph.class);
     graphService.put("1", graph);
     assertThat(graphService.getAll()).containsExactly(graph);
   }

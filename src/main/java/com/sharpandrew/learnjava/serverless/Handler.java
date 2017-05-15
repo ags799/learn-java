@@ -1,5 +1,8 @@
 package com.sharpandrew.learnjava.serverless;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.jrestless.aws.gateway.GatewayFeature;
 import com.jrestless.aws.gateway.handler.GatewayRequestObjectHandler;
 import com.sharpandrew.learnjava.graph.GraphResource;
@@ -15,8 +18,16 @@ public final class Handler extends GatewayRequestObjectHandler {
     ResourceConfig resourceConfig = new ResourceConfig()
         .registerInstances(GraphResource.create())
         .registerInstances(PathResource.create())
+        .registerInstances(createJsonProvider())
         .register(GatewayFeature.class);
     init(resourceConfig);
     start();
+  }
+
+  private JacksonJaxbJsonProvider createJsonProvider() {
+    JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
+    ObjectMapper mapper = new ObjectMapper().registerModule(new Jdk8Module());
+    provider.setMapper(mapper);
+    return provider;
   }
 }
