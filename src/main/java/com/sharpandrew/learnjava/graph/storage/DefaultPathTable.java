@@ -11,6 +11,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.sharpandrew.learnjava.graph.model.GraphPath;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraphPath;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.StoragePathEdge;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;

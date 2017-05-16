@@ -7,7 +7,7 @@ import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
 import com.sharpandrew.learnjava.graph.storage.DefaultEdgeTable;
 import com.sharpandrew.learnjava.graph.storage.EdgeTable;
-import com.sharpandrew.learnjava.graph.storage.StorageEdge;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.StorageEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.NotFoundException;

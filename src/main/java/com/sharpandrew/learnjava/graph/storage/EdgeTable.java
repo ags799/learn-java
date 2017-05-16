@@ -1,5 +1,6 @@
 package com.sharpandrew.learnjava.graph.storage;
 
+import com.sharpandrew.learnjava.graph.storage.dynamodb.StorageEdge;
 import java.util.Set;
 
 public interface EdgeTable {
