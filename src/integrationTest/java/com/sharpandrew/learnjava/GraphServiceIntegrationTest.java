@@ -42,8 +42,6 @@ public class GraphServiceIntegrationTest {
     Graph graph = ImmutableGraph.builder()
         .addEdges(ImmutableEdge.builder().startVertex(0).endVertex(1).build())
         .build();
-    ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module());
-    Graph sameGraph = objectMapper.readValue(objectMapper.writeValueAsString(graph), Graph.class);
     graphService.put("1", graph);
     assertThat(graphService.getAll()).containsExactly(graph);
   }
