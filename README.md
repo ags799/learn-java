@@ -8,7 +8,7 @@ We learn Java by implementing answers to common interview questions.
 Prepare your environment by
 
 - installing [serverless](http://serverless.com)
-- setting AWS access key ID & secret access key values
+- [setting AWS access key ID & secret access key values](https://serverless.com/framework/docs/providers/aws/guide/credentials#amazon-web-services)
 
 Verify your code with
 
@@ -20,14 +20,6 @@ Deploy your code with
 
 `my-dev-stack` should be unique to you. Using your username is a good idea.
 The output of the deploy command will indicate the URL to which the code was deployed.
-
-To run integration tests, first deploy your code to some development stack
-
-    ./gradlew deploy -Pstage=my-dev-stack
-
-Then run the tests with
-
-    ./gradlew integrationTest
 
 Remove your deployment with
 
