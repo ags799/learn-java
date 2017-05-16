@@ -6,27 +6,27 @@ import com.sharpandrew.learnjava.graph.model.Graph;
 import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
 import com.sharpandrew.learnjava.graph.storage.Dao;
-import com.sharpandrew.learnjava.graph.storage.EdgeTable;
+import com.sharpandrew.learnjava.graph.storage.GraphTable;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class DynamoDbEdgeTable implements EdgeTable {
-  private static DynamoDbEdgeTable instance = null;
+public final class DynamoDbGraphTable implements GraphTable {
+  private static DynamoDbGraphTable instance = null;
 
   private final Dao<DynamoDbEdge> dao;
 
   @VisibleForTesting
-  DynamoDbEdgeTable(Dao<DynamoDbEdge> dao) {
+  DynamoDbGraphTable(Dao<DynamoDbEdge> dao) {
     this.dao = dao;
   }
 
-  public static DynamoDbEdgeTable getInstance() {
+  public static DynamoDbGraphTable getInstance() {
     if (instance == null) {
       Dao<DynamoDbEdge> dao =
           DynamoDbDao.create(DynamoDbEdge.class, Environment.getEdgeTableName());
-      instance = new DynamoDbEdgeTable(dao);
+      instance = new DynamoDbGraphTable(dao);
     }
     return instance;
   }
