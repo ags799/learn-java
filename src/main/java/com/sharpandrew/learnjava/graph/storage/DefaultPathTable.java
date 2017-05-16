@@ -8,31 +8,36 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.sharpandrew.learnjava.graph.model.GraphPath;
+import com.sharpandrew.learnjava.graph.model.ImmutableGraphPath;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public final class DynamoDbEdgeDao implements EdgeDao {
-  private static DynamoDbEdgeDao instance = null;
+public class DefaultPathTable implements PathTable {
+  private static DefaultPathTable instance = null;
 
   private final DynamoDBMapper mapper;
 
   @VisibleForTesting
-  DynamoDbEdgeDao(DynamoDBMapper mapper) {
+  DefaultPathTable(DynamoDBMapper mapper) {
     this.mapper = mapper;
   }
 
-  public static DynamoDbEdgeDao getInstance() {
+  public static DefaultPathTable getInstance() {
     if (instance == null) {
-      String tableName = Environment.getEdgeTableName();
+      String tableName = Environment.getPathTableName();
       DynamoDBMapperConfig config = DynamoDBMapperConfig.builder()
           .withTableNameOverride(
               DynamoDBMapperConfig.TableNameOverride.withTableNameReplacement(tableName))
           .build();
       DynamoDBMapper mapper = new DynamoDBMapper(
           AmazonDynamoDBClientBuilder.defaultClient(), config);
-      instance = new DynamoDbEdgeDao(mapper);
+      instance = new DefaultPathTable(mapper);
       return instance;
     } else {
       return instance;
@@ -40,27 +45,39 @@ public final class DynamoDbEdgeDao implements EdgeDao {
   }
 
   @Override
-  public Set<StorageEdge> get(String graphId) {
+  public GraphPath get(String pathId) {
     DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
     scanExpression.addFilterCondition(
-        "graphId",
+        "pathId",
         new Condition()
             .withComparisonOperator(ComparisonOperator.EQ)
-            .withAttributeValueList(new AttributeValue(graphId)));
-    List<StorageEdge> matchingEdges = mapper.scan(StorageEdge.class, scanExpression);
-    return ImmutableSet.<StorageEdge>builder().addAll(matchingEdges).build();
+            .withAttributeValueList(new AttributeValue(pathId)));
+    List<StoragePathEdge> matchingEdges = mapper.scan(StoragePathEdge.class, scanExpression);
+    List<Integer> vertices = matchingEdges.stream()
+        .map(StoragePathEdge::getStartVertex)
+        .collect(Collectors.toList());
+    vertices.add(Iterables.getLast(matchingEdges).getEndVertex());
+    return ImmutableGraphPath.builder()
+        .verticesStartToFinish(vertices)
+        .build();
   }
 
   @Override
-  public Set<StorageEdge> getAll() {
-    List<StorageEdge> allEdges = mapper.scan(
-        StorageEdge.class, new DynamoDBScanExpression());
-    return ImmutableSet.<StorageEdge>builder().addAll(allEdges).build();
-  }
-
-  @Override
-  public void post(Set<StorageEdge> edges) {
-    List<DynamoDBMapper.FailedBatch> failedBatches = mapper.batchSave(edges);
+  public String post(GraphPath graphPath) {
+    String pathId = UUID.randomUUID().toString();
+    Set<StoragePathEdge> storagePathEdges = IntStream
+        .range(0, graphPath.verticesStartToFinish().size() - 1)
+        .boxed()
+        .map(place -> {
+          StoragePathEdge storagePathEdge = new StoragePathEdge();
+          storagePathEdge.setPathId(pathId);
+          storagePathEdge.setPlace(place);
+          storagePathEdge.setStartVertex(graphPath.verticesStartToFinish().get(place));
+          storagePathEdge.setEndVertex(graphPath.verticesStartToFinish().get(place + 1));
+          return storagePathEdge;
+        })
+        .collect(Collectors.toSet());
+    List<DynamoDBMapper.FailedBatch> failedBatches = mapper.batchSave(storagePathEdges);
     if (!failedBatches.isEmpty()) {
       StringBuilder stringBuilder = new StringBuilder();
       stringBuilder.append("Failed to save some batches:\n");
@@ -71,12 +88,8 @@ public final class DynamoDbEdgeDao implements EdgeDao {
         stringBuilder.append(batch.getException());
       });
       throw new RuntimeException(stringBuilder.toString());
+    } else {
+      return pathId;
     }
-  }
-
-  @Override
-  public void delete(String graphId) {
-    Set<StorageEdge> edgesToDelete = get(graphId);
-    mapper.batchDelete(edgesToDelete);
   }
 }

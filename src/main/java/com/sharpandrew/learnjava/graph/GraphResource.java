@@ -5,27 +5,27 @@ import com.sharpandrew.learnjava.graph.model.Edge;
 import com.sharpandrew.learnjava.graph.model.Graph;
 import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
-import com.sharpandrew.learnjava.graph.storage.DynamoDbEdgeDao;
-import com.sharpandrew.learnjava.graph.storage.EdgeDao;
+import com.sharpandrew.learnjava.graph.storage.DefaultEdgeTable;
+import com.sharpandrew.learnjava.graph.storage.EdgeTable;
 import com.sharpandrew.learnjava.graph.storage.StorageEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.NotFoundException;
 
 public final class GraphResource implements GraphService {
-  private final EdgeDao edgeDao;
+  private final EdgeTable edgeTable;
 
   @VisibleForTesting
-  GraphResource(EdgeDao edgeDao) {
-    this.edgeDao = edgeDao;
+  GraphResource(EdgeTable edgeTable) {
+    this.edgeTable = edgeTable;
   }
 
   public static GraphResource create() {
-    return new GraphResource(DynamoDbEdgeDao.getInstance());
+    return new GraphResource(DefaultEdgeTable.getInstance());
   }
 
   public Graph get(String id) {
-    Set<StorageEdge> storageEdges = edgeDao.get(id);
+    Set<StorageEdge> storageEdges = edgeTable.get(id);
     if (storageEdges.isEmpty()) {
       throw new NotFoundException();
     } else {
@@ -40,7 +40,7 @@ public final class GraphResource implements GraphService {
   }
 
   public Set<Graph> getAll() {
-    Set<StorageEdge> storageEdges = edgeDao.getAll();
+    Set<StorageEdge> storageEdges = edgeTable.getAll();
     return storageEdges.stream()
         .collect(Collectors.groupingBy(StorageEdge::getGraphId, Collectors.toSet()))
         .values()
@@ -67,10 +67,10 @@ public final class GraphResource implements GraphService {
           return storageEdge;
         })
         .collect(Collectors.toSet());
-    edgeDao.post(storageEdges);
+    edgeTable.post(storageEdges);
   }
 
   public void delete(String id) {
-    edgeDao.delete(id);
+    edgeTable.delete(id);
   }
 }

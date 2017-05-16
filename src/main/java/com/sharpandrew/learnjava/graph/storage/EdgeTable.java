@@ -2,7 +2,7 @@ package com.sharpandrew.learnjava.graph.storage;
 
 import java.util.Set;
 
-public interface EdgeDao {
+public interface EdgeTable {
   Set<StorageEdge> get(String graphId);
 
   Set<StorageEdge> getAll();
