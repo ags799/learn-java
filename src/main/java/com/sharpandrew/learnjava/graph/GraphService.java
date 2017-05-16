@@ -1,6 +1,7 @@
 package com.sharpandrew.learnjava.graph;
 
 import com.sharpandrew.learnjava.graph.model.Graph;
+import com.sharpandrew.learnjava.graph.model.GraphDescription;
 import java.util.Set;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -25,7 +26,7 @@ public interface GraphService {
   @PUT
   @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
-  void put(@PathParam("id") String id, Graph graph);
+  void put(@PathParam("id") String id, GraphDescription graphDescription);
 
   @DELETE
   @Path("/{id}")
