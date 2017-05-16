@@ -1,4 +1,14 @@
 package com.sharpandrew.learnjava.graph.storage;
 
-public interface Dao {
+import java.util.List;
+import java.util.Set;
+
+public interface Dao<T> {
+  List<T> getMatchingRows(String key, String value);
+
+  Set<T> getAllRows();
+
+  void saveAll(Set<T> items);
+
+  void deleteAll(List<T> edgesToDelete);
 }
