@@ -2,7 +2,7 @@ package com.sharpandrew.learnjava.graph;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.sharpandrew.learnjava.graph.model.GraphPath;
-import com.sharpandrew.learnjava.graph.storage.DefaultPathTable;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbPathTable;
 import com.sharpandrew.learnjava.graph.storage.PathTable;
 
 public final class PathResource implements PathService {
@@ -14,7 +14,7 @@ public final class PathResource implements PathService {
   }
 
   public static PathResource create() {
-    return new PathResource(DefaultPathTable.getInstance());
+    return new PathResource(DynamoDbPathTable.getInstance());
   }
 
   @Override

@@ -5,7 +5,7 @@ import com.sharpandrew.learnjava.graph.model.Edge;
 import com.sharpandrew.learnjava.graph.model.Graph;
 import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
-import com.sharpandrew.learnjava.graph.storage.DefaultEdgeTable;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbEdgeTable;
 import com.sharpandrew.learnjava.graph.storage.EdgeTable;
 import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbEdge;
 import java.util.Set;
@@ -21,7 +21,7 @@ public final class GraphResource implements GraphService {
   }
 
   public static GraphResource create() {
-    return new GraphResource(DefaultEdgeTable.getInstance());
+    return new GraphResource(DynamoDbEdgeTable.getInstance());
   }
 
   public Graph get(String id) {
