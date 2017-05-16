@@ -4,7 +4,6 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.jrestless.aws.gateway.GatewayFeature;
 import com.jrestless.aws.gateway.handler.GatewayRequestObjectHandler;
 import com.sharpandrew.learnjava.graph.GraphResource;
-import com.sharpandrew.learnjava.graph.PathResource;
 import com.sharpandrew.learnjava.graph.SearchResource;
 import com.sharpandrew.learnjava.util.ObjectMappers;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,7 +16,6 @@ public final class Handler extends GatewayRequestObjectHandler {
     SLF4JBridgeHandler.install();
     ResourceConfig resourceConfig = new ResourceConfig()
         .registerInstances(GraphResource.create())
-        .registerInstances(PathResource.create())
         .registerInstances(SearchResource.create())
         .registerInstances(createJsonProvider())
         .register(GatewayFeature.class);

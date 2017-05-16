@@ -1,19 +1,19 @@
 package com.sharpandrew.learnjava.graph;
 
-import com.sharpandrew.learnjava.graph.model.GraphPath;
+import java.util.List;
 
-public class SearchResource implements SearchService {
+public final class SearchResource implements SearchService {
   public static SearchResource create() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public GraphPath breadthFirstSearch(String graphId) {
+  public List<Integer> breadthFirstSearch(String graphId) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public GraphPath depthFirstSearch(String graphId) {
+  public List<Integer> depthFirstSearch(String graphId) {
     throw new UnsupportedOperationException();
   }
 }
