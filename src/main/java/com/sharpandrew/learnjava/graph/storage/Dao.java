@@ -11,5 +11,5 @@ public interface Dao<T> {
 
   void saveAll(Set<T> items);
 
-  void deleteAll(List<T> edgesToDelete);
+  void deleteAll(List<T> items);
 }

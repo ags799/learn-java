@@ -53,8 +53,8 @@ public final class DynamoDbDao<T> implements Dao<T> {
   }
 
   @Override
-  public void deleteAll(List<T> edgesToDelete) {
-    handleFailedBatches(mapper.batchDelete(edgesToDelete));
+  public void deleteAll(List<T> items) {
+    handleFailedBatches(mapper.batchDelete(items));
   }
 
   private void handleFailedBatches(List<DynamoDBMapper.FailedBatch> failedBatches) {

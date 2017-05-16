@@ -13,9 +13,9 @@ import org.immutables.value.Value;
 @JsonSerialize(as = ImmutableGraph.class)
 @Value.Style(jdkOnly = true)
 public abstract class Graph {
-  public abstract Set<Edge> edges();
+  public abstract Optional<String> id();
 
-  public abstract Optional<String> name();
+  public abstract Set<Edge> edges();
 
   @Value.Check
   public void check() {
