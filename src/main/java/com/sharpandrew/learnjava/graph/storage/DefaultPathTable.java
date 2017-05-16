@@ -11,7 +11,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterables;
 import com.sharpandrew.learnjava.graph.model.GraphPath;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraphPath;
-import com.sharpandrew.learnjava.graph.storage.dynamodb.StoragePathEdge;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbPathEdge;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
@@ -53,9 +53,9 @@ public class DefaultPathTable implements PathTable {
         new Condition()
             .withComparisonOperator(ComparisonOperator.EQ)
             .withAttributeValueList(new AttributeValue(pathId)));
-    List<StoragePathEdge> matchingEdges = mapper.scan(StoragePathEdge.class, scanExpression);
+    List<DynamoDbPathEdge> matchingEdges = mapper.scan(DynamoDbPathEdge.class, scanExpression);
     List<Integer> vertices = matchingEdges.stream()
-        .map(StoragePathEdge::getStartVertex)
+        .map(DynamoDbPathEdge::getStartVertex)
         .collect(Collectors.toList());
     vertices.add(Iterables.getLast(matchingEdges).getEndVertex());
     return ImmutableGraphPath.builder()
@@ -66,19 +66,19 @@ public class DefaultPathTable implements PathTable {
   @Override
   public String post(GraphPath graphPath) {
     String pathId = UUID.randomUUID().toString();
-    Set<StoragePathEdge> storagePathEdges = IntStream
+    Set<DynamoDbPathEdge> dynamoDbPathEdges = IntStream
         .range(0, graphPath.verticesStartToFinish().size() - 1)
         .boxed()
         .map(place -> {
-          StoragePathEdge storagePathEdge = new StoragePathEdge();
-          storagePathEdge.setPathId(pathId);
-          storagePathEdge.setPlace(place);
-          storagePathEdge.setStartVertex(graphPath.verticesStartToFinish().get(place));
-          storagePathEdge.setEndVertex(graphPath.verticesStartToFinish().get(place + 1));
-          return storagePathEdge;
+          DynamoDbPathEdge dynamoDbPathEdge = new DynamoDbPathEdge();
+          dynamoDbPathEdge.setPathId(pathId);
+          dynamoDbPathEdge.setPlace(place);
+          dynamoDbPathEdge.setStartVertex(graphPath.verticesStartToFinish().get(place));
+          dynamoDbPathEdge.setEndVertex(graphPath.verticesStartToFinish().get(place + 1));
+          return dynamoDbPathEdge;
         })
         .collect(Collectors.toSet());
-    List<DynamoDBMapper.FailedBatch> failedBatches = mapper.batchSave(storagePathEdges);
+    List<DynamoDBMapper.FailedBatch> failedBatches = mapper.batchSave(dynamoDbPathEdges);
     if (!failedBatches.isEmpty()) {
       StringBuilder stringBuilder = new StringBuilder();
       stringBuilder.append("Failed to save some batches:\n");

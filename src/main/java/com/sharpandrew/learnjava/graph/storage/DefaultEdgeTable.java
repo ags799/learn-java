@@ -9,7 +9,7 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
-import com.sharpandrew.learnjava.graph.storage.dynamodb.StorageEdge;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbEdge;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
@@ -41,26 +41,26 @@ public final class DefaultEdgeTable implements EdgeTable {
   }
 
   @Override
-  public Set<StorageEdge> get(String graphId) {
+  public Set<DynamoDbEdge> get(String graphId) {
     DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
     scanExpression.addFilterCondition(
         "graphId",
         new Condition()
             .withComparisonOperator(ComparisonOperator.EQ)
             .withAttributeValueList(new AttributeValue(graphId)));
-    List<StorageEdge> matchingEdges = mapper.scan(StorageEdge.class, scanExpression);
-    return ImmutableSet.<StorageEdge>builder().addAll(matchingEdges).build();
+    List<DynamoDbEdge> matchingEdges = mapper.scan(DynamoDbEdge.class, scanExpression);
+    return ImmutableSet.<DynamoDbEdge>builder().addAll(matchingEdges).build();
   }
 
   @Override
-  public Set<StorageEdge> getAll() {
-    List<StorageEdge> allEdges = mapper.scan(
-        StorageEdge.class, new DynamoDBScanExpression());
-    return ImmutableSet.<StorageEdge>builder().addAll(allEdges).build();
+  public Set<DynamoDbEdge> getAll() {
+    List<DynamoDbEdge> allEdges = mapper.scan(
+        DynamoDbEdge.class, new DynamoDBScanExpression());
+    return ImmutableSet.<DynamoDbEdge>builder().addAll(allEdges).build();
   }
 
   @Override
-  public void post(Set<StorageEdge> edges) {
+  public void post(Set<DynamoDbEdge> edges) {
     List<DynamoDBMapper.FailedBatch> failedBatches = mapper.batchSave(edges);
     if (!failedBatches.isEmpty()) {
       StringBuilder stringBuilder = new StringBuilder();
@@ -77,7 +77,7 @@ public final class DefaultEdgeTable implements EdgeTable {
 
   @Override
   public void delete(String graphId) {
-    Set<StorageEdge> edgesToDelete = get(graphId);
+    Set<DynamoDbEdge> edgesToDelete = get(graphId);
     mapper.batchDelete(edgesToDelete);
   }
 }

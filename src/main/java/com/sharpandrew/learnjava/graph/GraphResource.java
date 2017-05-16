@@ -7,7 +7,7 @@ import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
 import com.sharpandrew.learnjava.graph.storage.DefaultEdgeTable;
 import com.sharpandrew.learnjava.graph.storage.EdgeTable;
-import com.sharpandrew.learnjava.graph.storage.dynamodb.StorageEdge;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbEdge;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.NotFoundException;
@@ -25,14 +25,14 @@ public final class GraphResource implements GraphService {
   }
 
   public Graph get(String id) {
-    Set<StorageEdge> storageEdges = edgeTable.get(id);
-    if (storageEdges.isEmpty()) {
+    Set<DynamoDbEdge> dynamoDbEdges = edgeTable.get(id);
+    if (dynamoDbEdges.isEmpty()) {
       throw new NotFoundException();
     } else {
-      Set<Edge> edges = storageEdges.stream()
-          .map(storageEdge -> ImmutableEdge.builder()
-              .startVertex(storageEdge.getStartVertex())
-              .endVertex(storageEdge.getEndVertex())
+      Set<Edge> edges = dynamoDbEdges.stream()
+          .map(dynamoDbEdge -> ImmutableEdge.builder()
+              .startVertex(dynamoDbEdge.getStartVertex())
+              .endVertex(dynamoDbEdge.getEndVertex())
               .build())
           .collect(Collectors.toSet());
       return ImmutableGraph.builder().edges(edges).build();
@@ -40,15 +40,15 @@ public final class GraphResource implements GraphService {
   }
 
   public Set<Graph> getAll() {
-    Set<StorageEdge> storageEdges = edgeTable.getAll();
-    return storageEdges.stream()
-        .collect(Collectors.groupingBy(StorageEdge::getGraphId, Collectors.toSet()))
+    Set<DynamoDbEdge> dynamoDbEdges = edgeTable.getAll();
+    return dynamoDbEdges.stream()
+        .collect(Collectors.groupingBy(DynamoDbEdge::getGraphId, Collectors.toSet()))
         .values()
         .stream()
         .map(dynamoDbEdgesByGraph -> dynamoDbEdgesByGraph.stream()
-            .map(storageEdge -> ImmutableEdge.builder()
-                .startVertex(storageEdge.getStartVertex())
-                .endVertex(storageEdge.getEndVertex())
+            .map(dynamoDbEdge -> ImmutableEdge.builder()
+                .startVertex(dynamoDbEdge.getStartVertex())
+                .endVertex(dynamoDbEdge.getEndVertex())
                 .build())
             .collect(Collectors.toSet()))
         .map(edges -> ImmutableGraph.builder()
@@ -58,16 +58,16 @@ public final class GraphResource implements GraphService {
   }
 
   public void put(String id, Graph graph) {
-    Set<StorageEdge> storageEdges = graph.edges().stream()
+    Set<DynamoDbEdge> dynamoDbEdges = graph.edges().stream()
         .map(edge -> {
-          StorageEdge storageEdge = new StorageEdge();
-          storageEdge.setGraphId(id);
-          storageEdge.setStartVertex(edge.startVertex());
-          storageEdge.setEndVertex(edge.endVertex());
-          return storageEdge;
+          DynamoDbEdge dynamoDbEdge = new DynamoDbEdge();
+          dynamoDbEdge.setGraphId(id);
+          dynamoDbEdge.setStartVertex(edge.startVertex());
+          dynamoDbEdge.setEndVertex(edge.endVertex());
+          return dynamoDbEdge;
         })
         .collect(Collectors.toSet());
-    edgeTable.post(storageEdges);
+    edgeTable.post(dynamoDbEdges);
   }
 
   public void delete(String id) {

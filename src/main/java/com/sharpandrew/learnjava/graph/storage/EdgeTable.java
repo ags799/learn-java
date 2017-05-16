@@ -1,14 +1,14 @@
 package com.sharpandrew.learnjava.graph.storage;
 
-import com.sharpandrew.learnjava.graph.storage.dynamodb.StorageEdge;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbEdge;
 import java.util.Set;
 
 public interface EdgeTable {
-  Set<StorageEdge> get(String graphId);
+  Set<DynamoDbEdge> get(String graphId);
 
-  Set<StorageEdge> getAll();
+  Set<DynamoDbEdge> getAll();
 
-  void post(Set<StorageEdge> edges);
+  void post(Set<DynamoDbEdge> edges);
 
   void delete(String graphId);
 }
