@@ -2,28 +2,28 @@ package com.sharpandrew.learnjava.graph;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.sharpandrew.learnjava.graph.model.GraphPath;
-import com.sharpandrew.learnjava.graph.storage.DynamoDbPathDao;
-import com.sharpandrew.learnjava.graph.storage.PathDao;
+import com.sharpandrew.learnjava.graph.storage.PathTable;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbPathTable;
 
 public final class PathResource implements PathService {
-  private final PathDao pathDao;
+  private final PathTable pathTable;
 
   @VisibleForTesting
-  PathResource(PathDao pathDao) {
-    this.pathDao = pathDao;
+  PathResource(PathTable pathTable) {
+    this.pathTable = pathTable;
   }
 
   public static PathResource create() {
-    return new PathResource(DynamoDbPathDao.getInstance());
+    return new PathResource(DynamoDbPathTable.getInstance());
   }
 
   @Override
   public GraphPath get(String id) {
-    return pathDao.get(id);
+    return pathTable.get(id);
   }
 
   @Override
   public String put(GraphPath path) {
-    return pathDao.post(path);
+    return pathTable.post(path);
   }
 }

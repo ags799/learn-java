@@ -1,10 +1,10 @@
-package com.sharpandrew.learnjava.graph.storage;
+package com.sharpandrew.learnjava.graph.storage.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 
-public class StoragePathEdge {
+public class DynamoDbPathEdge {
   private String pathId;
   private int place;
   private int startVertex;
