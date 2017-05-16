@@ -5,7 +5,7 @@ import com.sharpandrew.learnjava.graph.model.GraphPath;
 import com.sharpandrew.learnjava.graph.storage.DynamoDbPathDao;
 import com.sharpandrew.learnjava.graph.storage.PathDao;
 
-public class PathResource implements PathService {
+public final class PathResource implements PathService {
   private final PathDao pathDao;
 
   @VisibleForTesting
