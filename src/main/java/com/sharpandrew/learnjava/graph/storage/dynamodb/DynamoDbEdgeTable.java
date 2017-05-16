@@ -10,7 +10,6 @@ import com.sharpandrew.learnjava.graph.storage.EdgeTable;
 import com.sharpandrew.learnjava.serverless.Environment;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class DynamoDbEdgeTable implements EdgeTable {
@@ -58,12 +57,11 @@ public final class DynamoDbEdgeTable implements EdgeTable {
 
   @Override
   public void post(Graph graph) {
-    String graphId = graph.id().orElse(UUID.randomUUID().toString());
     Set<DynamoDbEdge> edges = graph.edges()
         .stream()
         .map(edge -> {
           DynamoDbEdge dynamoDbEdge = new DynamoDbEdge();
-          dynamoDbEdge.setGraphId(graphId);
+          dynamoDbEdge.setGraphId(graph.id());
           dynamoDbEdge.setStartVertex(edge.startVertex());
           dynamoDbEdge.setEndVertex(edge.endVertex());
           return dynamoDbEdge;
