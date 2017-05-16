@@ -1,6 +1,6 @@
 language: java
 jdk:
   - oraclejdk8
-script: bash ci.bash
+script: ./gradlew assemble check
 notifications:
   email: false
