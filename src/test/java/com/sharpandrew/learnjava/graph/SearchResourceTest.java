@@ -31,7 +31,7 @@ public final class SearchResourceTest {
           .build())
         .build();
     when(graphTable.get("some-id")).thenReturn(graph);
-    assertThat(searchResource.breadthFirstSearch("some-id")).containsExactly(0, 1);
+    assertThat(searchResource.breadthFirstSearch("some-id", 0)).containsExactly(0, 1);
   }
 
   /**
@@ -56,7 +56,7 @@ public final class SearchResourceTest {
                 .build())
         .build();
     when(graphTable.get("some-id")).thenReturn(graph);
-    assertThat(searchResource.breadthFirstSearch("some-id")).containsExactly(0, 1, 2);
+    assertThat(searchResource.breadthFirstSearch("some-id", 0)).containsExactly(0, 1, 2);
   }
 
   /**
@@ -91,6 +91,7 @@ public final class SearchResourceTest {
                 .build())
         .build();
     when(graphTable.get("some-id")).thenReturn(graph);
-    assertThat(searchResource.breadthFirstSearch("some-id")).containsExactly(0, 1, 2, 3, 4);
+    assertThat(searchResource.breadthFirstSearch("some-id", 0))
+        .containsExactly(0, 1, 2, 3, 4);
   }
 }

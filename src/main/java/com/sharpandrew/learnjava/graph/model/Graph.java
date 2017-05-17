@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkState;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,7 +40,10 @@ public abstract class Graph {
         .collect(Collectors.groupingBy(Edge::startVertex, Collectors.toSet()));
   }
 
-  public List<Integer> children(int current) {
-
+  public Set<Integer> children(int current) {
+    return edgesByStartingVertex().get(current)
+        .stream()
+        .map(Edge::endVertex)
+        .collect(Collectors.toSet());
   }
 }

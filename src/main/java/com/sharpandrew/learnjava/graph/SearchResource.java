@@ -10,6 +10,7 @@ import com.sharpandrew.learnjava.graph.storage.GraphTable;
 import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbGraphTable;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public final class SearchResource implements SearchService {
   private final GraphTable graphTable;
@@ -33,7 +34,7 @@ public final class SearchResource implements SearchService {
     while (!queue.isEmpty()) {
       int current = queue.remove();
       resultBuilder.add(current);
-      queue.addAll(graph.children(current));
+      queue.addAll(graph.children(current).stream().sorted().collect(Collectors.toList()));
     }
     return resultBuilder.build();
   }
