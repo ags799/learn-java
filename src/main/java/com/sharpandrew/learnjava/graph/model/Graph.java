@@ -38,7 +38,7 @@ public abstract class Graph {
   @JsonIgnore
   public Map<Integer, Set<Edge>> edgesByStartingVertex() {
     return edges().stream()
-        .collect(Collectors.groupingBy(Edge::startVertex));  // TODO: what's wrong here?
+        .collect(Collectors.groupingBy(Edge::startVertex, Collectors.toSet()));
   }
 
   public List<Integer> children(int current) {
