@@ -6,7 +6,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Queues;
 import com.sharpandrew.learnjava.graph.model.Graph;
-import com.sharpandrew.learnjava.graph.model.ImmutableVertex;
 import com.sharpandrew.learnjava.graph.model.Vertex;
 import com.sharpandrew.learnjava.graph.storage.GraphTable;
 import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbGraphTable;
@@ -29,9 +28,7 @@ public final class SearchResource implements SearchService {
   @Override
   public List<Vertex> breadthFirstSearch(String graphId, int rootVertexId) {
     Graph graph = graphTable.get(graphId);
-    Vertex rootVertex = ImmutableVertex.builder()
-        .id(rootVertexId)
-        .build();
+    Vertex rootVertex = Vertex.create(rootVertexId);
     checkArgument(graph.vertices().contains(rootVertex));
     ImmutableList.Builder<Vertex> resultBuilder = ImmutableList.builder();
     Queue<Vertex> queue = Queues.newArrayDeque();
