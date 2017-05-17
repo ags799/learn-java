@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.ImmutableSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,9 +42,13 @@ public abstract class Graph {
   }
 
   public Set<Integer> children(int current) {
-    return edgesByStartingVertex().get(current)
-        .stream()
-        .map(Edge::endVertex)
-        .collect(Collectors.toSet());
+    Set<Edge> edges = edgesByStartingVertex().get(current);
+    if (edges == null) {
+      return ImmutableSet.of();
+    } else {
+      return edges.stream()
+          .map(Edge::endVertex)
+          .collect(Collectors.toSet());
+    }
   }
 }
