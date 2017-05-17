@@ -6,18 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.Test;
 
 public final class EdgeTest {
-  private static final Edge SOME_EDGE = ImmutableEdge.builder()
-      .startVertex(0)
-      .endVertex(2)
-      .build();
-  private static final Edge SOME_EDGE_WITH_DIFFERENT_START_VERTEX = ImmutableEdge.builder()
-      .startVertex(1)
-      .endVertex(2)
-      .build();
-  private static final Edge SOME_EDGE_WITH_DIFFERENT_END_VERTEX = ImmutableEdge.builder()
-      .startVertex(0)
-      .endVertex(1)
-      .build();
+  private static final Edge SOME_EDGE = Edge.create(0, 2);
+  private static final Edge SOME_EDGE_WITH_DIFFERENT_START_VERTEX = Edge.create(1, 2);
+  private static final Edge SOME_EDGE_WITH_DIFFERENT_END_VERTEX = Edge.create(0, 1);
 
   @Test
   public void compareTo_wrongType() throws Exception {

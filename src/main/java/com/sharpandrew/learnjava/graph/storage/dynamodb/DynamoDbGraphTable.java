@@ -3,7 +3,6 @@ package com.sharpandrew.learnjava.graph.storage.dynamodb;
 import com.google.common.annotations.VisibleForTesting;
 import com.sharpandrew.learnjava.graph.model.Edge;
 import com.sharpandrew.learnjava.graph.model.Graph;
-import com.sharpandrew.learnjava.graph.model.ImmutableEdge;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
 import com.sharpandrew.learnjava.graph.storage.Dao;
 import com.sharpandrew.learnjava.graph.storage.GraphTable;
@@ -62,8 +61,8 @@ public final class DynamoDbGraphTable implements GraphTable {
         .map(edge -> {
           DynamoDbEdge dynamoDbEdge = new DynamoDbEdge();
           dynamoDbEdge.setGraphId(graph.id());
-          dynamoDbEdge.setStartVertex(edge.startVertex());
-          dynamoDbEdge.setEndVertex(edge.endVertex());
+          dynamoDbEdge.setStartVertex(edge.startVertex().id());
+          dynamoDbEdge.setEndVertex(edge.endVertex().id());
           return dynamoDbEdge;
         })
         .collect(Collectors.toSet());
@@ -78,11 +77,8 @@ public final class DynamoDbGraphTable implements GraphTable {
 
   private Set<Edge> edgesFromDynamoDbEdges(List<DynamoDbEdge> dynamoDbEdges) {
     return dynamoDbEdges.stream()
-        .map(dynamoDbEdge -> ImmutableEdge.builder()
-          .startVertex(dynamoDbEdge.getStartVertex())
-          .endVertex(dynamoDbEdge.getEndVertex())
-          .build())
+        .map(dynamoDbEdge ->
+            Edge.create(dynamoDbEdge.getStartVertex(), dynamoDbEdge.getEndVertex()))
         .collect(Collectors.toSet());
   }
-
 }
