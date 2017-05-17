@@ -2,3 +2,4 @@
 build
 .serverless
 generated
+src/integrationTest/resources/most-recent-deployment-output.txt
