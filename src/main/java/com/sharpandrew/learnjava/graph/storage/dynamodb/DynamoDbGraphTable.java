@@ -22,7 +22,7 @@ public final class DynamoDbGraphTable implements GraphTable {
     this.dao = dao;
   }
 
-  public static DynamoDbGraphTable getInstance() {
+  public static DynamoDbGraphTable create() {
     if (instance == null) {
       Dao<DynamoDbEdge> dao =
           DynamoDbDao.create(DynamoDbEdge.class, Environment.getEdgeTableName());

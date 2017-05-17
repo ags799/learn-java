@@ -17,7 +17,7 @@ public final class GraphResource implements GraphService {
   }
 
   public static GraphResource create() {
-    return new GraphResource(DynamoDbGraphTable.getInstance());
+    return new GraphResource(DynamoDbGraphTable.create());
   }
 
   @Override
