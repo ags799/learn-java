@@ -1,5 +1,6 @@
 package com.sharpandrew.learnjava.graph;
 
+import com.sharpandrew.learnjava.graph.model.Vertex;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,12 +14,12 @@ public interface SearchService {
   @GET
   @Path("/{graphId}/bfs/{rootVertex}")
   @Produces(MediaType.APPLICATION_JSON)
-  List<Integer> breadthFirstSearch(
+  List<Vertex> breadthFirstSearch(
       @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertex);
 
   @GET
   @Path("/{graphId}/dfs/{rootVertex}")
   @Produces(MediaType.APPLICATION_JSON)
-  List<Integer> depthFirstSearch(
+  List<Vertex> depthFirstSearch(
       @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertex);
 }

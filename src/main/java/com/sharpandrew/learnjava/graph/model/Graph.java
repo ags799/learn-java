@@ -1,5 +1,6 @@
 package com.sharpandrew.learnjava.graph.model;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,6 +22,19 @@ public abstract class Graph {
 
   public abstract Set<Edge> edges();
 
+  /** Consecutive pairs in {@code vertices} form edges of the returned {@code Graph}. */
+  public static Graph create(String id, int... vertices) {
+    checkArgument(
+        vertices.length % 2 == 0,
+        "Vertices must be provided in (startVertex, endVertex) pairs to form edges.");
+    ImmutableGraph.Builder builder = ImmutableGraph.builder()
+        .id(id);
+    for (int i = 0; i < vertices.length - 1; i += 2) {
+      builder.addEdges(Edge.create(vertices[i], vertices[i + 1]));
+    }
+    return builder.build();
+  }
+
   @Value.Check
   public void check() {
     checkState(!edges().isEmpty(), "There must be at least one edge.");
@@ -28,7 +42,7 @@ public abstract class Graph {
 
   @Value.Lazy
   @JsonIgnore
-  public Set<Integer> vertices() {
+  public Set<Vertex> vertices() {
     return edges().stream()
         .flatMap(edge -> edge.vertices().stream())
         .collect(Collectors.toSet());
@@ -36,19 +50,25 @@ public abstract class Graph {
 
   @Value.Lazy
   @JsonIgnore
-  public Map<Integer, Set<Edge>> edgesByStartingVertex() {
+  public Map<Vertex, Set<Vertex>> childrenByStartingVertex() {
     return edges().stream()
-        .collect(Collectors.groupingBy(Edge::startVertex, Collectors.toSet()));
+        .collect(Collectors.groupingBy(Edge::startVertex, Collectors.toSet()))
+        .entrySet()
+        .stream()
+        .collect(Collectors.toMap(
+            Map.Entry::getKey,
+            entry -> entry.getValue()
+                .stream()
+                .map(Edge::endVertex)
+                .collect(Collectors.toSet())));
   }
 
-  public Set<Integer> children(int current) {
-    Set<Edge> edges = edgesByStartingVertex().get(current);
-    if (edges == null) {
+  public Set<Vertex> children(Vertex current) {
+    Set<Vertex> vertices = childrenByStartingVertex().get(current);
+    if (vertices == null) {
       return ImmutableSet.of();
     } else {
-      return edges.stream()
-          .map(Edge::endVertex)
-          .collect(Collectors.toSet());
+      return vertices;
     }
   }
 }

@@ -13,13 +13,24 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableEdge.class)
 @JsonSerialize(as = ImmutableEdge.class)
 public abstract class Edge implements Comparable {
-  public abstract int startVertex();
+  public abstract Vertex startVertex();
 
-  public abstract int endVertex();
+  public abstract Vertex endVertex();
+
+  public static Edge create(int startVertex, int endVertex) {
+    return ImmutableEdge.builder()
+        .startVertex(ImmutableVertex.builder()
+          .id(startVertex)
+          .build())
+        .endVertex(ImmutableVertex.builder()
+          .id(endVertex)
+          .build())
+        .build();
+  }
 
   @Value.Lazy
   @JsonIgnore
-  public Set<Integer> vertices() {
+  public Set<Vertex> vertices() {
     return ImmutableSet.of(startVertex(), endVertex());
   }
 
@@ -27,10 +38,10 @@ public abstract class Edge implements Comparable {
   public int compareTo(Object o) {
     checkArgument(o.getClass() == ImmutableEdge.class);
     Edge other = (Edge) o;
-    if (startVertex() == other.startVertex()) {
-      return endVertex() - other.endVertex();
+    if (startVertex().equals(other.startVertex())) {
+      return endVertex().compareTo(other.endVertex());
     } else {
-      return startVertex() - other.startVertex();
+      return startVertex().compareTo(other.startVertex());
     }
   }
 }
