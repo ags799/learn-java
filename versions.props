@@ -9,5 +9,6 @@ junit:junit = 4.12
 org.assertj:assertj-core = 3.6.2
 org.glassfish.jersey.media:jersey-media-json-jackson = 2.23
 org.immutables:value = 2.4.4
+org.mockito:mockito-core = 2.7.22
 org.slf4j:* = 1.7.21
 

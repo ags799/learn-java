@@ -2,9 +2,13 @@ package com.sharpandrew.learnjava.graph.model;
 
 import static com.google.common.base.Preconditions.checkState;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.ImmutableSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.immutables.value.Value;
 
 /** Usually created from a user's input as a {@link GraphDescription}. */
@@ -20,5 +24,31 @@ public abstract class Graph {
   @Value.Check
   public void check() {
     checkState(!edges().isEmpty(), "There must be at least one edge.");
+  }
+
+  @Value.Lazy
+  @JsonIgnore
+  public Set<Integer> vertices() {
+    return edges().stream()
+        .flatMap(edge -> edge.vertices().stream())
+        .collect(Collectors.toSet());
+  }
+
+  @Value.Lazy
+  @JsonIgnore
+  public Map<Integer, Set<Edge>> edgesByStartingVertex() {
+    return edges().stream()
+        .collect(Collectors.groupingBy(Edge::startVertex, Collectors.toSet()));
+  }
+
+  public Set<Integer> children(int current) {
+    Set<Edge> edges = edgesByStartingVertex().get(current);
+    if (edges == null) {
+      return ImmutableSet.of();
+    } else {
+      return edges.stream()
+          .map(Edge::endVertex)
+          .collect(Collectors.toSet());
+    }
   }
 }

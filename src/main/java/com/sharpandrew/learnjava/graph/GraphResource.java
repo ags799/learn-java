@@ -4,30 +4,30 @@ import com.google.common.annotations.VisibleForTesting;
 import com.sharpandrew.learnjava.graph.model.Graph;
 import com.sharpandrew.learnjava.graph.model.GraphDescription;
 import com.sharpandrew.learnjava.graph.model.ImmutableGraph;
-import com.sharpandrew.learnjava.graph.storage.EdgeTable;
-import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbEdgeTable;
+import com.sharpandrew.learnjava.graph.storage.GraphTable;
+import com.sharpandrew.learnjava.graph.storage.dynamodb.DynamoDbGraphTable;
 import java.util.Set;
 
 public final class GraphResource implements GraphService {
-  private final EdgeTable edgeTable;
+  private final GraphTable graphTable;
 
   @VisibleForTesting
-  GraphResource(EdgeTable edgeTable) {
-    this.edgeTable = edgeTable;
+  GraphResource(GraphTable graphTable) {
+    this.graphTable = graphTable;
   }
 
   public static GraphResource create() {
-    return new GraphResource(DynamoDbEdgeTable.getInstance());
+    return new GraphResource(DynamoDbGraphTable.create());
   }
 
   @Override
   public Graph get(String id) {
-    return edgeTable.get(id);
+    return graphTable.get(id);
   }
 
   @Override
   public Set<Graph> getAll() {
-    return edgeTable.getAll();
+    return graphTable.getAll();
   }
 
   @Override
@@ -36,11 +36,11 @@ public final class GraphResource implements GraphService {
         .id(id)
         .edges(graphDescription.edges())
         .build();
-    edgeTable.post(graph);
+    graphTable.post(graph);
   }
 
   @Override
   public void delete(String id) {
-    edgeTable.delete(id);
+    graphTable.delete(id);
   }
 }

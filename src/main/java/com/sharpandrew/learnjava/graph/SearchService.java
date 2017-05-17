@@ -9,13 +9,16 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/api/graph")
 public interface SearchService {
+  /** Throws {@link IllegalArgumentException} if {@code rootVertex} does not exist. */
   @GET
-  @Path("/{graphId}/bfs")
+  @Path("/{graphId}/bfs/{rootVertex}")
   @Produces(MediaType.APPLICATION_JSON)
-  List<Integer> breadthFirstSearch(@PathParam("graphId") String graphId);
+  List<Integer> breadthFirstSearch(
+      @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertex);
 
   @GET
-  @Path("/{graphId}/dfs")
+  @Path("/{graphId}/dfs/{rootVertex}")
   @Produces(MediaType.APPLICATION_JSON)
-  List<Integer> depthFirstSearch(@PathParam("graphId") String graphId);
+  List<Integer> depthFirstSearch(
+      @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertex);
 }
