@@ -78,17 +78,17 @@ public final class SearchResourceTest {
               .endVertex(1)
               .build(),
             ImmutableEdge.builder()
-                .startVertex(0)
-                .endVertex(1)
-                .build(),
+              .startVertex(0)
+              .endVertex(2)
+              .build(),
             ImmutableEdge.builder()
-                .startVertex(0)
-                .endVertex(1)
-                .build(),
+              .startVertex(1)
+              .endVertex(3)
+              .build(),
             ImmutableEdge.builder()
-                .startVertex(0)
-                .endVertex(1)
-                .build())
+              .startVertex(1)
+              .endVertex(4)
+              .build())
         .build();
     when(graphTable.get("some-id")).thenReturn(graph);
     assertThat(searchResource.breadthFirstSearch("some-id", 0))
