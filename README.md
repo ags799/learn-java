@@ -14,13 +14,17 @@ Verify your code with
 
     ./gradlew check
 
+Run integration tests, which are not included in the above `check` task, with
+
+    make integrationTest
+
 Deploy your code with
 
-    ./gradlew deploy -Pstage=my-dev-stack
-
-`my-dev-stack` should be unique to you. Using your username is a good idea.
-The output of the deploy command will indicate the URL to which the code was deployed.
+    serverless deploy
 
 Remove your deployment with
 
-    ./gradlew removeDeployment -Pstage=my-dev-stack
+    serverless remove
+
+Note that all of these commands will deploy to the default `dev` stack and `us-east-1` AWS region.
+This could produce conflicts for simultaneous deploying across users.
