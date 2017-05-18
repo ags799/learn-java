@@ -77,7 +77,10 @@ public final class SearchResourceTest {
 
   @Test
   public void depthFirstSearch_rootVertexNotInGraph() throws Exception {
-    throw new UnsupportedOperationException();  // TODO: assert throws IllegalArgumentException
+    Graph graph = Graph.create("some-id", 0, 1);
+    when(graphTable.get("some-id")).thenReturn(graph);
+    assertThatThrownBy(() -> searchResource.depthFirstSearch("some-id", 2))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   /**
