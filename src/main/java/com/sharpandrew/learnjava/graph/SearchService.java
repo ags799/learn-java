@@ -15,11 +15,11 @@ public interface SearchService {
   @Path("/{graphId}/bfs/{rootVertex}")
   @Produces(MediaType.APPLICATION_JSON)
   List<Vertex> breadthFirstSearch(
-      @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertex);
+      @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertexId);
 
   @GET
   @Path("/{graphId}/dfs/{rootVertex}")
   @Produces(MediaType.APPLICATION_JSON)
   List<Vertex> depthFirstSearch(
-      @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertex);
+      @PathParam("graphId") String graphId, @PathParam("rootVertex") int rootVertexId);
 }

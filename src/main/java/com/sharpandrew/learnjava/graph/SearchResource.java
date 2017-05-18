@@ -42,7 +42,10 @@ public final class SearchResource implements SearchService {
   }
 
   @Override
-  public List<Vertex> depthFirstSearch(String graphId, int rootVertex) {
+  public List<Vertex> depthFirstSearch(String graphId, int rootVertexId) {
+    Graph graph = graphTable.get(graphId);
+    Vertex rootVertex = Vertex.create(rootVertexId);
+    checkArgument(graph.vertices().contains(rootVertex));
     throw new UnsupportedOperationException();
   }
 }

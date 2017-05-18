@@ -1,6 +1,7 @@
 package com.sharpandrew.learnjava.graph;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -12,6 +13,14 @@ import org.junit.Test;
 public final class SearchResourceTest {
   private final GraphTable graphTable = mock(GraphTable.class);
   private final SearchResource searchResource = new SearchResource(graphTable);
+
+  @Test
+  public void breadthFirstSearch_vertexNotInGraph() throws Exception {
+    Graph graph = Graph.create("some-id", 0, 1);
+    when(graphTable.get("some-id")).thenReturn(graph);
+    assertThatThrownBy(() -> searchResource.breadthFirstSearch("some-id", 2))
+        .isInstanceOf(IllegalArgumentException.class);
+  }
 
   /**
    * 0
@@ -64,6 +73,11 @@ public final class SearchResourceTest {
     when(graphTable.get("some-id")).thenReturn(graph);
     assertThat(searchResource.breadthFirstSearch("some-id", 0)).containsExactly(
         Vertex.create(0), Vertex.create(1), Vertex.create(2), Vertex.create(3), Vertex.create(4));
+  }
+
+  @Test
+  public void depthFirstSearch_rootVertexNotInGraph() throws Exception {
+    throw new UnsupportedOperationException();  // TODO: assert throws IllegalArgumentException
   }
 
   /**
