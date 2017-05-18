@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.common.io.Files;
 import com.sharpandrew.learnjava.graph.GraphService;
+import com.sharpandrew.learnjava.graph.model.Edge;
+import com.sharpandrew.learnjava.graph.model.Graph;
+import com.sharpandrew.learnjava.graph.model.GraphDescription;
+import com.sharpandrew.learnjava.graph.model.ImmutableGraphDescription;
 import com.sharpandrew.learnjava.util.FeignClients;
 import java.io.File;
 import java.io.IOException;
@@ -23,8 +27,13 @@ public final class GraphResourceIntegrationTest {
   }
 
   @Test
-  public void initiallyThereAreNoGraphs() throws Exception {
-    assertThat(graphService.getAll()).isEmpty();
+  public void putAndGet() throws Exception {
+    GraphDescription graphDescription = ImmutableGraphDescription.builder()
+        .addEdges(Edge.create(0, 1))
+        .build();
+    graphService.put("some-id", graphDescription);
+    Graph expected = Graph.create("some-id", 0, 1);
+    assertThat(graphService.get("some-id")).isEqualTo(expected);
   }
 
   private String getUrl() throws IOException {
